@@ -1,11 +1,30 @@
 from datetime import datetime
+from enum import Enum
 from typing import TypeVar
+
 from pandas.core.common import contextlib
+from sqlalchemy import event
 from sqlalchemy.engine import Engine
 from sqlmodel import Field, SQLModel, Session, create_engine, select
 
 
 DB_PATH = "/home/julianonegri/Documents/github/fiscal/fiscal.db"
+
+
+class Categories(str, Enum):
+    ENTRADA = "Entrada"
+    FRETE = "Frete"
+    INSUMOS = "Insumos"
+    SEGURANÇA = "Segurança"
+    SERVIÇOS_3 = " Serviços 3º"
+    CONTADOR = "Contador"
+    SISTEMAS = "Sistemas"
+    SALÁRIOS = "Salários"
+    COMPRAS = "Compras"
+    IGNORAR = "Ignorar"
+    BANCOS = "Bancos"
+    IMPOSTO = "Imposto"
+    MARKETING = "Marketing"
 
 
 class Transactions(SQLModel, table=True):
@@ -19,7 +38,7 @@ class Transactions(SQLModel, table=True):
     category: str | None
     description: str
     value: str
-    counterpart_name: str
+    counterpart_name: str | None
     validated: bool
 
 
@@ -53,6 +72,13 @@ class NFEs(SQLModel, table=True):
     validated: bool = Field(default=False)
 
 
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA foreign_keys=ON")
+    cursor.close()
+
+
 class Database:
     _session: Session | None = None
 
@@ -61,7 +87,7 @@ class Database:
 
     @classmethod
     def from_default(cls):
-        engine = create_engine(f"sqlite:///{DB_PATH}", echo=True)
+        engine = create_engine(f"sqlite:///{DB_PATH}", echo=False)
         return cls(engine=engine)
 
     @contextlib.contextmanager

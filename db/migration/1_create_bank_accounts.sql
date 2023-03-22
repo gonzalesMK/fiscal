@@ -36,7 +36,7 @@ CREATE TABLE transactions
     counterpart_name text,
     validated boolean NOT NULL,
     FOREIGN KEY(bank) REFERENCES banks(bank),
-    FOREIGN KEY(counterpart_name) REFERENCES companies(name),
+    FOREIGN KEY(counterpart_name) REFERENCES company_naming(nickname),
     FOREIGN KEY(category) REFERENCES categories(category)
 );
 -- rollback drop table transactions
@@ -77,6 +77,7 @@ CREATE TABLE company_naming
 -- changeset fiscal:8
 INSERT INTO "main"."categories" (category)
 VALUES
+    (''),
     ('Frete'),
     ('Insumos'),
     ('Segurança'),
@@ -88,10 +89,12 @@ VALUES
     ('Ignorar'),
     ('Bancos'),
     ('Imposto'),
-    ('Marketing');
+    ('Marketing'),
+    ('Embalagens'),
+    ('Entrada');
 
 -- changeset fiscal:9
-INSERT INTO "main"."categories" (category)
+INSERT INTO "main"."banks" (bank, description)
 VALUES
-    ('Embalagens');
+    ('bb', 'Banco do Brasil');
 

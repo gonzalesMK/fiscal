@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "fiscal"
+version = "0.1.0"
+description = ""
+authors = ["Juliano Negri <juliano.negri@ab-inbev.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+typer = "^0.7.0"
+pydantic = "^1.10.6"
+sqlmodel = "^0.0.8"
+pandas = "^1.5.3"
+openpyxl = "^3.1.2"
+thefuzz = "^0.19.0"
+python-Levenshtein = "^0.20.9"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+pylsp-rope = "^0.1.11"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -4,10 +4,9 @@ from enum import Enum
 from pathlib import Path
 from thefuzz import process
 import pandas as pd
-from sqlmodel import Field, SQLModel, desc
 import typer
 
-from fiscal.db import Companies, Company_Naming, Database, Transactions
+from fiscal.db import Categories, Companies, Company_Naming, Database, Transactions
 
 root = Path(__file__).parent
 
@@ -17,7 +16,10 @@ BB_BANK = "bb"
 class Columns(str, Enum):
     CNPJ = "cnpj"
     NAME = "nome"
-    DESCRIPTION = "Historico"
+    TRANSACTION = "Historico"
+    DESCRIPTION = "Detalhamento Hist."
+    VALOR = "Valor R$ "
+    DATE = "Data"
 
 
 class TransactionType(str, Enum):
@@ -30,13 +32,16 @@ class TransactionType(str, Enum):
 
 
 NO_COUNTERPARTY = [
+    TransactionType.IMPOSTO,
     TransactionType.BACEN,
     TransactionType.TARIFA,
-    TransactionType.IMPOSTO,
-    TransactionType.PIX_REJEITADO,
     TransactionType.TARIFA_DOC,
+    TransactionType.PIX_REJEITADO,
     TransactionType.DEPOSITO,
 ]
+
+IGNORE_TYPE = [TransactionType.PIX_REJEITADO, TransactionType.DEPOSITO]
+TARIFAS = [TransactionType.BACEN, TransactionType.TARIFA, TransactionType.TARIFA_DOC]
 
 
 class EntryTipe(str, Enum):
@@ -101,72 +106,29 @@ def _get_info(description: str) -> tuple[str, str]:
     return _cnpj_in_names(description)
 
 
-def _create_company(
-    nickname: str,
-    cnpj: str,
-    by_cnpj: dict[str, str],
-    by_name: dict[str, str],
-    db: Database,
-) -> None:
-    """
-    If there is no nickname nor company, try to get one
-    """
+def _ask_for_cnpj(companies: dict[str, Companies], nickname: str) -> str:
+    _print_company_suggestion(companies, nickname)
+
+    cnpj = input("Which CNPJ to use: ")
+    print(f"Given cnpj {cnpj}")
+
+    if not cnpj:
+        cnpj = str(uuid.uuid4())
+    return cnpj
+
+
+def _create_company(nickname: str, cnpj: str, db: Database) -> Companies:
     print(f"Creating {nickname} with {cnpj}.")
 
-    # 1 - Look for a CNPJ
-    if not cnpj:
-        values = list(by_name.keys())
-        chosen: str = process.extractOne(nickname, values)[0]
-        found_cnpj = {value: key for key, value in by_cnpj.items()}[by_name[chosen]]
-        print(f"Similar named {chosen} with cnpj {found_cnpj}")
-        cnpj = input("Which CNPJ to use: ")
-
-        print(f"Given cnpj {cnpj}")
-        if not cnpj:
-            cnpj = str(uuid.uuid4())
-        # 2 - Given a new CNPJ, try to find a company
-        elif cnpj in by_cnpj:
-            name = by_cnpj.get(cnpj)
-            assert name
-            by_name[nickname] = name
-            db.add(Company_Naming(nickname=nickname, name=name))
-            return
-
-    # 3 - If no company - ask for a name
     name = input("Which Name to use: ") or nickname
     category = input("Which category to use: ")
-    by_cnpj[cnpj] = name
-    by_name[nickname] = name
-    by_name[name] = name
-    db.add(Companies(name=name, cnpj=cnpj, default_category=category))
+
+    company = Companies(name=name, cnpj=cnpj, default_category=category)
+
+    db.add(company)
     db.add(Company_Naming(nickname=nickname, name=name))
 
-
-def _currency_to_float(series: pd.Series):
-    return series.str.replace(".", "").str.replace(",", ".").astype(float)
-
-
-def _get_dataframe(xlsx_path: str) -> pd.DataFrame:
-    d_f = pd.read_excel(xlsx_path, skiprows=2)
-
-    d_f["Historico"] = d_f["Historico"].str.strip()
-
-    # Filter start and end
-    start_row: int = d_f[d_f["Historico"] == "Saldo Anterior"].index[0] + 1
-    end_row: int = d_f[d_f["Historico"] == "S A L D O"].index[0]
-    d_f = d_f.iloc[start_row:end_row]
-
-    # Clean Data
-    d_f["Data"] = pd.to_datetime(d_f["Data"], format="%d/%m/%Y")
-
-    d_f["Valor R$ "] = _currency_to_float(d_f["Valor R$ "])
-
-    d_f["Detalhamento Hist."] = d_f["Detalhamento Hist."].str.strip()
-
-    # Extract name and cnpj
-    d_f["cnpj"], d_f["nome"] = d_f["Detalhamento Hist."].apply(_get_info).str
-
-    return d_f
+    return company
 
 
 def update_bb(xlsx_path: str = "resources/bb_fevereiro.xlsx"):
@@ -178,57 +140,167 @@ def update_bb(xlsx_path: str = "resources/bb_fevereiro.xlsx"):
 
     with db.start():
         _assert_new_entries_only(db, d_f)
-
-        by_name = {naming.nickname: naming.name for naming in db.get_company_names()}
-        by_cnpj = {company.cnpj: company.name for company in db.get_companies()}
+        companies = _get_companies_mapping(db)
 
         for _, row in d_f.iterrows():
-            naming = by_name.get(row["nome"], None)
-            company = by_cnpj.get(row["cnpj"], None)
+            transaction, cnpj = _parse_row(row)
+            counterpart = transaction.counterpart_name or ""
 
-            exists = company or naming
-            has_counterparty = row["Historico"] not in NO_COUNTERPARTY
-            is_saida = row["Inf."] != "C"
-            if (not exists) and (has_counterparty) and is_saida:
-                _create_company(
-                    nickname=row["nome"],
-                    cnpj=row["cnpj"],
-                    by_name=by_name,
-                    by_cnpj=by_cnpj,
-                    db=db,
-                )
-
-            db.add(
-                Transactions(
-                    id=None,
-                    bank=BB_BANK,
-                    date=row["Data"],
-                    entry_type=EntryTipe.ENTRADA
-                    if row["Inf."] == "C"
-                    else EntryTipe.SAIDA,
-                    transaction_type=row["Historico"],
-                    category=None,
-                    description=row["Detalhamento Hist."],
-                    value=row["Valor R$ "],
-                    counterpart_name=row["nome"],
-                    validated=False,
-                )
+            print(
+                f"{transaction.counterpart_name}\t|{transaction.entry_type}\t|{transaction.transaction_type}\t|{transaction.date}"
             )
+            if _has_counterpart(transaction):
+                company = _get_company(companies, counterpart, cnpj, db)
+
+                companies[company.cnpj] = company
+                companies[company.name] = company
+                companies[counterpart] = company
+                print(companies[counterpart])
+            else:
+                company = None
+                transaction.counterpart_name = None
+
+            category = _default_cat_for_transaction(transaction, company)
+
+            transaction.category = category
+
+            db.add(transaction)
+
+
+def _get_dataframe(xlsx_path: str) -> pd.DataFrame:
+    d_f = pd.read_excel(xlsx_path, skiprows=2)
+
+    d_f[Columns.TRANSACTION] = d_f[Columns.TRANSACTION].str.strip()
+
+    # Filter start and end
+    start_row: int = d_f[d_f[Columns.TRANSACTION] == "Saldo Anterior"].index[0] + 1
+    end_row: int = d_f[d_f[Columns.TRANSACTION] == "S A L D O"].index[0]
+    d_f = d_f.iloc[start_row:end_row]
+
+    # Clean Data
+    d_f[Columns.DATE] = pd.to_datetime(d_f[Columns.DATE], format="%d/%m/%Y")
+
+    d_f[Columns.VALOR] = _currency_to_float(d_f[Columns.VALOR])
+
+    d_f["Detalhamento Hist."] = d_f["Detalhamento Hist."].str.strip()
+
+    # Extract name and cnpj
+    d_f[Columns.CNPJ], d_f[Columns.NAME] = (
+        d_f["Detalhamento Hist."].apply(_get_info).str
+    )
+
+    return d_f
+
+
+def _currency_to_float(series: pd.Series):
+    return (
+        series.str.replace(".", "", regex=False)
+        .str.replace(",", ".", regex=False)
+        .astype(float)
+    )
 
 
 def _assert_new_entries_only(db: Database, d_f):
     transactions = db.get_transactions(bank=BB_BANK)
     dates = {tran.date for tran in transactions}
-    start: datetime = d_f["Data"].min()
-    end: datetime = d_f["Data"].max()
-    print(dates)
-    print(start)
-    print(end)
+    start: datetime = d_f[Columns.DATE].min()
+    end: datetime = d_f[Columns.DATE].max()
 
     is_less = any([date > start for date in dates])
     is_more = any([date < end for date in dates])
     if is_less and is_more:
         raise ValueError("Some dates are in between")
+
+
+def _get_companies_mapping(db: Database) -> dict[str, Companies]:
+    company_listing = db.get_companies()
+    names = db.get_company_names()
+    companies = {company.cnpj: company for company in company_listing}
+    companies |= {company.name: company for company in company_listing}
+    companies |= {name.nickname: companies[name.name] for name in names}
+    return companies
+
+
+def _parse_row(row: pd.Series) -> tuple[Transactions, str]:
+    cnpj = str(row[Columns.CNPJ])
+    entry_type = EntryTipe.ENTRADA if row["Inf."] == "C" else EntryTipe.SAIDA
+    date = row[Columns.DATE]
+    assert isinstance(date, datetime)
+
+    transaction = Transactions(
+        bank=BB_BANK,
+        date=date,
+        entry_type=entry_type,
+        transaction_type=str(row[Columns.TRANSACTION]),
+        category=None,
+        description=str(row["Detalhamento Hist."]),
+        value=str(row[Columns.VALOR]),
+        counterpart_name=str(row[Columns.NAME]),
+        validated=False,
+    )
+    return transaction, cnpj
+
+
+def _has_counterpart(transaction: Transactions) -> bool:
+    # Handle inflow and no counterpaty transactions
+    no_counterparty = transaction.transaction_type in NO_COUNTERPARTY
+    return not no_counterparty
+
+
+def _get_company(
+    companies: dict[str, Companies],
+    counterpart: str,
+    cnpj: str | None,
+    db: Database,
+) -> Companies:
+    # Simple case where name is on database
+    if counterpart in companies:
+        return companies[counterpart]
+
+    # If no name on database, check if there is a cnpj
+    if not cnpj:
+        cnpj = _ask_for_cnpj(companies, counterpart)
+
+    if cnpj in companies:
+        company = companies[cnpj]
+        db.add(Company_Naming(nickname=counterpart, name=company.name))
+        return company
+
+    # Otherwise create the company
+    return _create_company(counterpart, cnpj, db)
+
+
+def _print_company_suggestion(companies: dict[str, Companies], nickname: str):
+    values = list(key for key in companies.keys() if not key.isdigit())
+
+    chosen = process.extractOne(nickname, values)
+
+    found_cnpj = ""
+    if chosen:
+        chosen = str(chosen[0])
+        found_cnpj = companies[chosen]
+
+    print(f"Similar named {chosen} with cnpj {found_cnpj}")
+
+
+def _default_cat_for_transaction(
+    transaction: Transactions, company: Companies | None
+) -> str | None:
+    if transaction.entry_type == EntryTipe.ENTRADA:
+        return Categories.ENTRADA
+
+    if company:
+        return company.default_category
+
+    type_ = transaction.transaction_type
+    if type_ in IGNORE_TYPE:
+        return Categories.IGNORAR
+    if type_ in TARIFAS:
+        return Categories.BANCOS
+    if type_ == TransactionType.IMPOSTO:
+        return Categories.IMPOSTO
+
+    raise ValueError(f"Not found '{type_}'")
 
 
 if __name__ == "__main__":
