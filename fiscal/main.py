@@ -243,8 +243,9 @@ def _parse_row(row: pd.Series) -> tuple[Transactions, str]:
 
 def _has_counterpart(transaction: Transactions) -> bool:
     # Handle inflow and no counterpaty transactions
-    no_counterparty = transaction.transaction_type in NO_COUNTERPARTY
-    return not no_counterparty
+    has_counterparty = transaction.transaction_type not in NO_COUNTERPARTY
+    saida = transaction.entry_type == EntryTipe.SAIDA
+    return has_counterparty and saida
 
 
 def _get_company(

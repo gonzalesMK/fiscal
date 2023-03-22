@@ -4,9 +4,7 @@ CREATE TABLE banks
 (
     bank TEXT PRIMARY KEY,
     description TEXT);
--- rollback drop table banks
 
--- changeset fiscal:2
 CREATE TABLE companies
 (
     name text PRIMARY KEY,
@@ -15,14 +13,12 @@ CREATE TABLE companies
     descricao TEXT,
     UNIQUE(cnpj)
 );
--- rollback drop table companies
 
--- changeset fiscal:3
 CREATE TABLE categories
 (
     category TEXT PRIMARY KEY
 );
--- changeset fiscal:4
+
 CREATE TABLE transactions
 (
     id INTEGER PRIMARY KEY,
@@ -39,9 +35,7 @@ CREATE TABLE transactions
     FOREIGN KEY(counterpart_name) REFERENCES company_naming(nickname),
     FOREIGN KEY(category) REFERENCES categories(category)
 );
--- rollback drop table transactions
 
--- changeset fiscal:5
 CREATE TABLE nfes
 (
     codigo_acesso TEXT PRIMARY KEY,
@@ -52,29 +46,24 @@ CREATE TABLE nfes
     validated boolean DEFAULT false,
 
     FOREIGN KEY(emissor) REFERENCES companies(name));
--- rollback drop table nfes
 
 
--- changeset fiscal:6
 CREATE TABLE validations
 (
     transacao INTEGER,
     codigo_acesso text,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(codigo_acesso, transacao),
     FOREIGN KEY(codigo_acesso) REFERENCES nfes(codigo_acesso),
     FOREIGN KEY(transacao) REFERENCES transactions(id));
--- rollback drop table validations
 
--- changeset fiscal:7
 CREATE TABLE company_naming
 (
     nickname text PRIMARY KEY,
     name text,
     FOREIGN KEY(name) REFERENCES companies(name)
 );
--- rollback drop table companies
 
--- changeset fiscal:8
 INSERT INTO "main"."categories" (category)
 VALUES
     (''),
@@ -93,7 +82,6 @@ VALUES
     ('Embalagens'),
     ('Entrada');
 
--- changeset fiscal:9
 INSERT INTO "main"."banks" (bank, description)
 VALUES
     ('bb', 'Banco do Brasil');

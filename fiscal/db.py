@@ -72,6 +72,13 @@ class NFEs(SQLModel, table=True):
     validated: bool = Field(default=False)
 
 
+class Validations(SQLModel, table=True):
+    transacao: int = Field(default=None, primary_key=True, foreign_key=Transactions.id)
+    codigo_acesso: str = Field(
+        default=None, primary_key=True, foreign_key=NFEs.codigo_acesso
+    )
+
+
 @event.listens_for(Engine, "connect")
 def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
