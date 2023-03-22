@@ -3,7 +3,7 @@ from enum import Enum
 from typing import TypeVar
 
 from pandas.core.common import contextlib
-from sqlalchemy import event
+from sqlalchemy import event, text
 from sqlalchemy.engine import Engine
 from sqlmodel import Field, SQLModel, Session, create_engine, select
 
@@ -109,6 +109,11 @@ class Database:
         finally:
             self._session = None
 
+    def delete(self, model: SQLModel) -> None:
+        if self._session is None:
+            raise ValueError("Not within a session")
+        self._session.delete(model)
+
     def add(self, model: SQLModel) -> None:
         if self._session is None:
             raise ValueError("Not within a session")
@@ -136,3 +141,18 @@ class Database:
 
         statement = select(Transactions).where(Transactions.bank.ilike(bank))
         return self._session.exec(statement=statement).all()
+
+    def get_validation_by_id(self, transacao: int, codigo_acesso: str):
+        if self._session is None:
+            raise ValueError("Not within a session")
+
+        statement = select(Validations).where(
+            Validations.codigo_acesso.ilike(codigo_acesso),
+            Validations.transacao == transacao,
+        )
+        return self._session.exec(statement=statement).first()
+
+    def execute(self, statement: str):
+        if self._session is None:
+            raise ValueError("Not within a session")
+        return self._session.execute(statement=text(statement))
