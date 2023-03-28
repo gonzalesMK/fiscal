@@ -33,17 +33,17 @@ def mock_context():
 
 def TRANSACTION_CPFL_1():
     return Transactions(
-        transaction_type="PAGAMENTO",
+        transaction_type="pagamento",
         id=2,
         bank="inter",
         date=datetime(2023, 3, 17, 0, 0),
         entry_type=EntryType.SAIDA,
         category=Category.INSUMOS,
-        description="CPFL CIA PAULISTA DE FORCA LUZ",
+        description="cpfl cia paulista de forca luz",
         value="1513.87",
-        counterpart_name="CPFL CIA PAULISTA DE FORCA LUZ",
+        counterpart_name="cpfl cia paulista de forca luz",
         validated=False,
-        external_id="mdaxxzawmdE5xzi1njuzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1NA==",
+        external_id="mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na==",
     )
 
 
@@ -62,11 +62,11 @@ def INSERT_TRANSACTION():
         bank=INTER_BANK,
         date=datetime(2023, 3, 17, 0, 0),
         entry_type=EntryType.SAIDA,
-        transaction_type="PAGAMENTO",
+        transaction_type="pagamento",
         category=str(Category.INSUMOS.value),
-        description="CPFL CIA PAULISTA DE FORCA LUZ",
+        description="cpfl cia paulista de forca luz",
         value="521.31",
-        counterpart_name="CPFL CIA PAULISTA DE FORCA LUZ",
+        counterpart_name="cpfl cia paulista de forca luz",
         validated=False,
         external_id="external_id_example",
     )
@@ -78,11 +78,11 @@ def INSERT_TRANSACTION_AMBEV():
         bank=INTER_BANK,
         date=datetime(2023, 3, 17, 0, 0),
         entry_type=EntryType.SAIDA,
-        transaction_type="PAGAMENTO",
+        transaction_type="pagamento",
         category=str(Category.INSUMOS.value),
-        description="AMBEV",
+        description="ambev",
         value="521.31",
-        counterpart_name="AMBEV",
+        counterpart_name="ambev",
         validated=False,
         external_id="external_id_example",
     )
@@ -97,13 +97,13 @@ def SETUP():
 def AMBEV():
     return [
         Companies(
-            name="AMBEV",
+            name="ambev",
             cnpj="1234",
             default_category=Category.INSUMOS,
         ),
         Company_Naming(
-            name="AMBEV",
-            nickname="AMBEV",
+            name="ambev",
+            nickname="ambev",
         ),
     ]
 
@@ -111,13 +111,13 @@ def AMBEV():
 def CPFL():
     return [
         Companies(
-            name="CPFL CIA PAULISTA DE FORCA LUZ",
+            name="cpfl cia paulista de forca luz",
             cnpj="123",
             default_category=Category.INSUMOS,
         ),
         Company_Naming(
-            name="CPFL CIA PAULISTA DE FORCA LUZ",
-            nickname="CPFL CIA PAULISTA DE FORCA LUZ",
+            name="cpfl cia paulista de forca luz",
+            nickname="cpfl cia paulista de forca luz",
         ),
     ]
 
@@ -154,8 +154,10 @@ class TestBancoInter(TestCase):
         with self.db:
             for model in SETUP() + CPFL():
                 self.db.add(model)
+                print(model)
 
             self.db.add(INSERT_TRANSACTION())
+            print("!!!!!!!!!!!!")
 
         update_banco_inter(client_id="123", client_secret="abc")
 
@@ -178,7 +180,7 @@ class TestBancoInter(TestCase):
             assert len(all_transactions) == 2
             self.assertDictEqual(
                 all_transactions[
-                    "mdaXxZaWmde5xZi1nJuZndmYmL8YmdiZltaZlte3xZKWmdaWmda1na=="
+                    "mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na=="
                 ].dict(),
                 TRANSACTION_CPFL_1().dict(),
             )
@@ -214,17 +216,17 @@ class TestBancoInter(TestCase):
             assert all_companies["cpfl cia paulista de forca luz"].cnpj == "123456"
             assert (
                 all_companies["cpfl cia paulista de forca luz"].default_category
-                == "Insumos"
+                == "insumos"
             )
 
-            assert "CPFL CIA PAULISTA DE FORCA LUZ" in all_namings
+            assert "cpfl cia paulista de forca luz" in all_namings
             assert len(all_namings) == 2
 
             # Default category on transaction
             assert len(all_transactions) == 2
             self.assertDictEqual(
                 all_transactions[
-                    "mdaXxZaWmde5xZi1nJuZndmYmL8YmdiZltaZlte3xZKWmdaWmda1na=="
+                    "mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na=="
                 ].dict(),
                 TRANSACTION_CPFL_1().dict(),
             )
@@ -256,14 +258,14 @@ class TestBancoInter(TestCase):
             assert len(all_companies) == 1
 
             assert "cpfl cia paulista de forca luz" in all_namings
-            assert all_namings["cpfl cia paulista de forca luz"].name == "AMBEV"
+            assert all_namings["cpfl cia paulista de forca luz"].name == "ambev"
             assert len(all_namings) == 2
 
             # Default category on transaction
             assert len(all_transactions) == 2
             self.assertDictEqual(
                 all_transactions[
-                    "mDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1NA=="
+                    "mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na=="
                 ].dict(),
                 TRANSACTION_CPFL_1().dict(),
             )
@@ -289,20 +291,20 @@ class TestBancoInter(TestCase):
             }
 
             # Already existing company
-            assert "CPFL CIA PAULISTA DE FORCA LUZ" in all_companies
+            assert "cpfl cia paulista de forca luz" in all_companies
             assert len(all_companies) == 1
 
-            assert "CPFL CIA PAULISTA DE FORCA LUZ" in all_namings
+            assert "cpfl cia paulista de forca luz" in all_namings
             assert len(all_namings) == 1
 
             assert len(all_transactions) == 3
             # Example of entrada
             # Transaction without company (ENTRADA)
-            assert all_transactions["1"].entry_type == "ENTRADA"
-            assert all_transactions["1"].category == "Entrada"
+            assert all_transactions["1"].entry_type == "entrada"
+            assert all_transactions["1"].category == "entrada"
             # Example of imposto
-            assert all_transactions["2"].transaction_type == "IMPOSTO"
-            assert all_transactions["2"].category == "Imposto"
+            assert all_transactions["2"].transaction_type == "imposto"
+            assert all_transactions["2"].category == "imposto"
 
             # Example of ignore type
 
@@ -340,6 +342,8 @@ class TestBancoInter(TestCase):
             # Default category on transaction
             assert len(all_transactions) == 1
             self.assertDictEqual(
-                all_transactions["external_id_example"].dict(),
+                all_transactions[
+                    "mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na=="
+                ].dict(),
                 TRANSACTION_CPFL_1().dict(),
             )

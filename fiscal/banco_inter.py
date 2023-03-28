@@ -54,6 +54,9 @@ class PagamentoTransacao(BaseModel):
     nomeOrigem: str
     autenticacao: str
 
+    class Config:
+        anystr_lower = True
+
 
 class DepositoTransacao(BaseModel):
     dataVencimento: str
@@ -62,10 +65,16 @@ class DepositoTransacao(BaseModel):
     nossoNumero: str
     codBarras: str
 
+    class Config:
+        anystr_lower = True
+
 
 class DebitoTransacao(BaseModel):
     estabelecimento: str
     tipoDetalhe: str
+
+    class Config:
+        anystr_lower = True
 
 
 class ChequeTransacao(BaseModel):
@@ -78,6 +87,9 @@ class ChequeTransacao(BaseModel):
     nomeEmpresa: str
     tipoDetalhe: str
     codigoAfiliado: str
+
+    class Config:
+        anystr_lower = True
 
 
 class BoletoTransacao(BaseModel):
@@ -94,6 +106,9 @@ class BoletoTransacao(BaseModel):
     cpfCnpj: str
     dataEmissao: str
     abatimento: str
+
+    class Config:
+        anystr_lower = True
 
 
 class TransferenciaTransacao(BaseModel):
@@ -112,6 +127,9 @@ class TransferenciaTransacao(BaseModel):
     agenciaRecebedor: str
     dataEfetivacao: str
 
+    class Config:
+        anystr_lower = True
+
 
 class PixTransacao(BaseModel):
     nomePagador: str
@@ -126,6 +144,9 @@ class PixTransacao(BaseModel):
     cpfCnpjRecebedor: str | None
     origemMovimentacao: str | None
 
+    class Config:
+        anystr_lower = True
+
 
 class Transaction(BaseModel):
     idTransacao: str
@@ -138,6 +159,9 @@ class Transaction(BaseModel):
     descricao: str
     detalhes: PixTransacao | TransferenciaTransacao | BoletoTransacao | ChequeTransacao | DebitoTransacao | DepositoTransacao | PagamentoTransacao | None
 
+    class Config:
+        anystr_lower = True
+
 
 class GetTransactions(BaseModel):
     totalPaginas: int
@@ -147,6 +171,9 @@ class GetTransactions(BaseModel):
     tamanhoPagina: int
     numeroDeElementos: int
     transacoes: list[Transaction]
+
+    class Config:
+        anystr_lower = True
 
 
 class InterBank:

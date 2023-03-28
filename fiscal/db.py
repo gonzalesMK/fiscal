@@ -14,24 +14,24 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 class EntryType(str, Enum):
-    ENTRADA = "ENTRADA"
-    SAIDA = "SAIDA"
+    ENTRADA = "entrada"
+    SAIDA = "saida"
 
 
 class Category(str, Enum):
-    BANCOS = "Bancos"
-    CONTADOR = "Contador"
-    COMPRAS = "Compras"
-    ENTRADA = "Entrada"
-    FRETE = "Frete"
-    INSUMOS = "Insumos"
-    IGNORAR = "Ignorar"
-    IMPOSTO = "Imposto"
-    MARKETING = "Marketing"
-    SALÁRIOS = "Salários"
-    SEGURANÇA = "Segurança"
-    SERVIÇOS_3 = "Serviços 3º"
-    SISTEMAS = "Sistemas"
+    BANCOS = "bancos"
+    CONTADOR = "contador"
+    COMPRAS = "compras"
+    ENTRADA = "entrada"
+    FRETE = "frete"
+    INSUMOS = "insumos"
+    IGNORAR = "ignorar"
+    IMPOSTO = "imposto"
+    MARKETING = "marketing"
+    SALÁRIOS = "salários"
+    SEGURANÇA = "segurança"
+    SERVIÇOS_3 = "serviços 3º"
+    SISTEMAS = "sistemas"
 
 
 class Categories(SQLModel, table=True):

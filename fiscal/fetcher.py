@@ -22,32 +22,32 @@ class TransactionType(str, Enum):
     DEPOSITO = "Depósito Online"
 
     # Inter BB
-    DEBITO_EM_CONTA = "DEBITO_EM_CONTA"
-    DEPOSITO_BOLETO = "DEPOSITO_BOLETO"
-    ANTECIPACAO_RECEBIVEIS = "ANTECIPACAO_RECEBIVEIS"
-    ANTECIPACAO_RECEBIVEIS_CARTAO = "ANTECIPACAO_RECEBIVEIS_CARTAO"
-    BOLETO_COBRANCA = "BOLETO_COBRANCA"
-    CAMBIO = "CAMBIO"
-    CASHBACK = "CASHBACK"
-    CHEQUE = "CHEQUE"
-    ESTORNO = "ESTORNO"
-    DOMICILIO_CARTAO = "DOMICILIO_CARTAO"
-    FINANCIAMENTO = "FINANCIAMENTO"
-    IMPOSTO_INTER = "IMPOSTO"
-    INTERPAG = "INTERPAG"
-    INVESTIMENTO = "INVESTIMENTO"
-    JUROS = "JUROS"
-    MAQUININHA_GRANITO = "MAQUININHA_GRANITO"
-    MULTA = "MULTA"
-    OUTROS = "OUTROS"
-    PAGAMENTO = "PAGAMENTO"
-    PIX = "PIX"
-    PROVENTOS = "PROVENTOS"
-    SAQUE = "SAQUE"
-    COMPRA_DEBITO = "COMPRA_DEBITO"
-    DEBITO_AUTOMATICO = "DEBITO_AUTOMATICO"
-    TARIFA_INTER = "TARIFA"
-    TRANSFERENCIA = "TRANSFERENCIA"
+    DEBITO_EM_CONTA = "debito_em_conta"
+    DEPOSITO_BOLETO = "deposito_boleto"
+    ANTECIPACAO_RECEBIVEIS = "antecipacao_recebiveis"
+    ANTECIPACAO_RECEBIVEIS_CARTAO = "antecipacao_recebiveis_cartao"
+    BOLETO_COBRANCA = "boleto_cobranca"
+    CAMBIO = "cambio"
+    CASHBACK = "cashback"
+    CHEQUE = "cheque"
+    ESTORNO = "estorno"
+    DOMICILIO_CARTAO = "domicilio_cartao"
+    FINANCIAMENTO = "financiamento"
+    IMPOSTO_INTER = "imposto"
+    INTERPAG = "interpag"
+    INVESTIMENTO = "investimento"
+    JUROS = "juros"
+    MAQUININHA_GRANITO = "maquininha_granito"
+    MULTA = "multa"
+    OUTROS = "outros"
+    PAGAMENTO = "pagamento"
+    PIX = "pix"
+    PROVENTOS = "proventos"
+    SAQUE = "saque"
+    COMPRA_DEBITO = "compra_debito"
+    DEBITO_AUTOMATICO = "debito_automatico"
+    TARIFA_INTER = "tarifa"
+    TRANSFERENCIA = "transferencia"
 
 
 NO_COUNTERPARTY = [
@@ -229,3 +229,6 @@ def handle_inserts(transactions: list[tuple[Transactions, str]], db: Database) -
         trans.category = category
 
         db.add(trans)
+
+        db._session.commit()
+        db._session.flush()
