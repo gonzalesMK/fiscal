@@ -67,20 +67,20 @@ CREATE TABLE company_naming
 INSERT INTO "main"."categories" (category)
 VALUES
     (''),
-    ('Frete'),
-    ('Insumos'),
-    ('Segurança'),
-    ('Serviços 3º'),
-    ('Contador'),
-    ('Sistemas'),
-    ('Salários'),
-    ('Compras'),
-    ('Ignorar'),
-    ('Bancos'),
-    ('Imposto'),
-    ('Marketing'),
-    ('Embalagens'),
-    ('Entrada');
+    ('frete'),
+    ('insumos'),
+    ('segurança'),
+    ('serviços 3º'),
+    ('contador'),
+    ('sistemas'),
+    ('salários'),
+    ('compras'),
+    ('ignorar'),
+    ('bancos'),
+    ('imposto'),
+    ('marketing'),
+    ('embalagens'),
+    ('entrada');
 
 INSERT INTO "main"."banks" (bank, description)
 VALUES

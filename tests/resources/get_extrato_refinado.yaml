@@ -1,0 +1,596 @@
+responses:
+- response:
+    auto_calculate_content_length: false
+    body: '{"access_token": "6cab577f-81d8-409f-8ba8-8e2b4e54ee73","token_type": "Bearer",
+      "expires_in": 3600, "scope": "extrato.read"}'
+    content_type: text/plain
+    method: POST
+    status: 200
+    url: https://cdpj.partners.bancointer.com.br/oauth/v2/token
+- response:
+    auto_calculate_content_length: false
+    body: "{\"totalPaginas\":2,\"totalElementos\":73,\"ultimaPagina\":false,\"primeiraPagina\"\
+      :true,\"tamanhoPagina\":50,\"numeroDeElementos\":50,\"transacoes\":[{\"idTransacao\"\
+      :\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA3Mw==\",\"dataInclusao\"\
+      :\"2023-03-21 17:23:09.180\",\"dataTransacao\":\"2023-03-21\",\"tipoTransacao\"\
+      :\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"217.00\",\"titulo\":\"Pix enviado\
+      \ \",\"descricao\":\"Nova Delivery\",\"detalhes\":{\"nomePagador\":\"HELENA\
+      \ MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E00416968202303212006eiGzwjIzyDD\",\"chavePixRecebedor\":\"44566572000108\"\
+      ,\"nomeEmpresaRecebedor\":\"COOP SICREDI DEXIS\",\"nomeRecebedor\":\"Nova Delivery\"\
+      ,\"cpfCnpjRecebedor\":\"44566572000108\",\"origemMovimentacao\":\"CHAVE\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA3Mg==\",\"\
+      dataInclusao\":\"2023-03-21 14:10:31.537\",\"dataTransacao\":\"2023-03-21\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"614.81\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"EMPORIO ABRANTES\",\"detalhes\"\
+      :{\"valorTotal\":\"614.81\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-21\",\"empresaEmissora\":\"BCO BRADESCO S.A.\",\"valorOriginal\"\
+      :\"614.81\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"23790627029000000057161075325607292960000061481\",\"\
+      valorParcial\":\"0.0\",\"hora\":\"14h09\",\"juros\":\"0.0\",\"multa\":\"0.0\"\
+      ,\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"23790627029000000057161075325607292960000061481\"\
+      ,\"nomeDestinatario\":\"EMPORIO ABRANTES\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\"\
+      :\"HELENA MARIA USBERTI DECICO 1598589\",\"autenticacao\":\"24205231929692969296000006148130\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA3MQ==\"\
+      ,\"dataInclusao\":\"2023-03-21 09:15:37.580\",\"dataTransacao\":\"2023-03-21\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"204.42\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"204.42\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-21\",\"valorOriginal\":\"204.42\",\"desconto\"\
+      :\"0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826700000027044201210000000000020024294000566157\"\
+      ,\"valorParcial\":\"204.42\",\"hora\":\"09h15\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE\
+      \ PIRACICABA\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 1\",\"autenticacao\":\"24205231929692969296000002044230\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA3MA==\",\"\
+      dataInclusao\":\"2023-03-21 09:15:37.560\",\"dataTransacao\":\"2023-03-21\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"204.42\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"204.42\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-21\",\"valorOriginal\":\"204.42\",\"desconto\"\
+      :\"0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826500000029044201210000000000020024294000558105\"\
+      ,\"valorParcial\":\"204.42\",\"hora\":\"09h15\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE\
+      \ PIRACICABA\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 1\",\"autenticacao\":\"24205231929692969296000002044230\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA2OQ==\",\"\
+      dataInclusao\":\"2023-03-21 09:15:37.400\",\"dataTransacao\":\"2023-03-21\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"107.88\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"107.88\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-21\",\"valorOriginal\":\"107.88\",\"desconto\"\
+      :\"0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826800000018078801210002000000020024294000590645\"\
+      ,\"valorParcial\":\"107.88\",\"hora\":\"09h15\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE\
+      \ PIRACICABA\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 1\",\"autenticacao\":\"24205231929692969296000001078830\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA2OA==\",\"\
+      dataInclusao\":\"2023-03-21 09:15:37.340\",\"dataTransacao\":\"2023-03-21\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"138.80\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"138.8\",\"detalheDescricao\":\"Pagamento\",\"\
+      contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\",\"\
+      dataVencimento\":\"2023-03-21\",\"valorOriginal\":\"138.8\",\"desconto\":\"\
+      0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826300000013388001210003000000020024294000574649\"\
+      ,\"valorParcial\":\"138.8\",\"hora\":\"09h15\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE PIRACICABA\"\
+      ,\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\
+      \ 1\",\"autenticacao\":\"24205231929692969296000001388030\"}},{\"idTransacao\"\
+      :\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIxXzkwMDAwMDA2Nw==\",\"dataInclusao\"\
+      :\"2023-03-21 09:15:37.310\",\"dataTransacao\":\"2023-03-21\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"185.18\",\"titulo\":\"Pagamento\
+      \ de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\",\"detalhes\":{\"valorTotal\"\
+      :\"185.18\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\":\"256534322\"\
+      ,\"agencia\":\"0001\",\"adicionado\":\"0.0\",\"dataVencimento\":\"2023-03-21\"\
+      ,\"valorOriginal\":\"185.18\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"codBarras\":\"826900000017851801210002000000020024294000582436\",\"valorParcial\"\
+      :\"185.18\",\"hora\":\"09h15\",\"juros\":\"0.0\",\"multa\":\"0.0\",\"empresaOrigem\"\
+      :\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE PIRACICABA\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929692969296000001851830\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2Ng==\"\
+      ,\"dataInclusao\":\"2023-03-20 18:43:34.773\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"204.42\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"204.42\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-20\",\"valorOriginal\":\"204.42\",\"desconto\"\
+      :\"0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826100000023044201210000000000010025294023030009\"\
+      ,\"valorParcial\":\"204.42\",\"hora\":\"18h43\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE\
+      \ PIRACICABA\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 1\",\"autenticacao\":\"24205231929592959295000002044230\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2NQ==\",\"\
+      dataInclusao\":\"2023-03-20 18:43:34.690\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"138.80\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEMAE PIRACICABA\"\
+      ,\"detalhes\":{\"valorTotal\":\"138.8\",\"detalheDescricao\":\"Pagamento\",\"\
+      contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\",\"\
+      dataVencimento\":\"2023-03-20\",\"valorOriginal\":\"138.8\",\"desconto\":\"\
+      0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"826000000016388001210003000000020024294000515006\"\
+      ,\"valorParcial\":\"138.8\",\"hora\":\"18h43\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEMAE PIRACICABA\"\
+      ,\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\
+      \ 1\",\"autenticacao\":\"24205231929592959295000001388030\"}},{\"idTransacao\"\
+      :\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2NA==\",\"dataInclusao\"\
+      :\"2023-03-20 07:40:34.363\",\"dataTransacao\":\"2023-03-20\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"224.00\",\"titulo\":\"Pagamento\
+      \ efetuado\",\"descricao\":\"R. ORLANDO COMERCIO DE BEBIDAS LTDA . EPP\",\"\
+      detalhes\":{\"valorTotal\":\"224.0\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-16\",\"empresaEmissora\":\"BANCO DO BRASIL S.A.\",\"valorOriginal\"\
+      :\"224.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"00190000090307825700700003846177192910000022400\",\"\
+      valorParcial\":\"0.0\",\"hora\":\"07h40\",\"juros\":\"0.0\",\"multa\":\"0.0\"\
+      ,\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"00190000090307825700700003846177192910000022400\"\
+      ,\"nomeDestinatario\":\"R. ORLANDO COMERCIO DE BEBIDAS LTDA . EPP\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\",\"autenticacao\"\
+      :\"24205231929592959291000002240030\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2Mw==\"\
+      ,\"dataInclusao\":\"2023-03-20 07:40:34.340\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"312.72\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"RICAR IND E COMERCIO DE EMBALAGENS\
+      \ E TRANSPORTES E\",\"detalhes\":{\"valorTotal\":\"312.72\",\"detalheDescricao\"\
+      :\"Pagamento\",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"4.32\",\"dataVencimento\":\"2023-03-16\",\"empresaEmissora\":\"BANCO DO BRASIL\
+      \ S.A.\",\"valorOriginal\":\"308.4\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"00190000090349019900100001364173192910000030840\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"07h39\",\"juros\":\"1.24\",\"multa\":\"\
+      3.08\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"00190000090349019900100001364173192910000030840\"\
+      ,\"nomeDestinatario\":\"RICAR IND E COMERCIO DE EMBALAGENS E TRANSPORTES E\"\
+      ,\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\"\
+      ,\"autenticacao\":\"24205231929592959291000003127230\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2Mg==\",\"dataInclusao\"\
+      :\"2023-03-20 03:17:53.250\",\"dataTransacao\":\"2023-03-20\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"3937.64\",\"titulo\":\"Pagamento\
+      \ de Conv\xEAnio\",\"descricao\":\"SIMPLES NACIONAL\",\"detalhes\":{\"valorTotal\"\
+      :\"3937.64\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\":\"256534322\"\
+      ,\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\":\"2023-03-20\"\
+      ,\"empresaEmissora\":\"SIMPLES NACIONAL\",\"valorOriginal\":\"3937.64\",\"desconto\"\
+      :\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\":\"0.0\",\"codBarras\"\
+      :\"858500000398376403282305790720230748766390892600\",\"valorParcial\":\"0.0\"\
+      ,\"hora\":\"14h05\",\"juros\":\"0.0\",\"multa\":\"0.0\",\"empresaOrigem\":\"\
+      Banco Inter\",\"linhaDigitavel\":\"858500000398376403282305790720230748766390892600\"\
+      ,\"nomeDestinatario\":\"SIMPLES NACIONAL\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\":\"24205231929192959295000039376430\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2MQ==\"\
+      ,\"dataInclusao\":\"2023-03-20 02:56:54.303\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"79.99\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"ARQUIVEI SERVICOS ON LINE\
+      \ LTDA\",\"detalhes\":{\"valorTotal\":\"79.99\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-20\",\"empresaEmissora\":\"BANCO DO BRASIL S.A.\"\
+      ,\"valorOriginal\":\"79.99\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"00190000090320652100100407677178692950000007999\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"18h00\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"00190000090320652100100407677178692950000007999\"\
+      ,\"nomeDestinatario\":\"ARQUIVEI SERVICOS ON LINE LTDA\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\",\"autenticacao\"\
+      :\"24205231929492959295000000799930\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA2MA==\"\
+      ,\"dataInclusao\":\"2023-03-20 02:56:54.020\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"400.00\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"RESULTADUS PRATICAS CONTABEIS\
+      \ LTDA\",\"detalhes\":{\"valorTotal\":\"400.0\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-20\",\"empresaEmissora\":\"BCO LETSBANK S.A.\"\
+      ,\"valorOriginal\":\"400.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"63091002010420175900090214400013192950000040000\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"18h00\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"63091002010420175900090214400013192950000040000\"\
+      ,\"nomeDestinatario\":\"RESULTADUS PRATICAS CONTABEIS LTDA\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\",\"autenticacao\"\
+      :\"24205231929492959295000004000030\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA1OQ==\"\
+      ,\"dataInclusao\":\"2023-03-20 02:56:53.710\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1592.50\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"EMBRAMEX ASSESSORIA COMERCIAL\
+      \ IMPORTACAO\",\"detalhes\":{\"valorTotal\":\"1592.5\",\"detalheDescricao\"\
+      :\"Pagamento\",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"0.0\",\"dataVencimento\":\"2023-03-17\",\"empresaEmissora\":\"CAIXA ECONOMICA\
+      \ FEDERAL\",\"valorOriginal\":\"1592.5\",\"desconto\":\"0.0\",\"cpfCnpj\":\"\
+      27723354000110\",\"valorAumentado\":\"0.0\",\"codBarras\":\"10491162291600010004600001490978292920000159250\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"18h00\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"10491162291600010004600001490978292920000159250\"\
+      ,\"nomeDestinatario\":\"EMBRAMEX ASSESSORIA COMERCIAL IMPORTACAO\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\",\"autenticacao\"\
+      :\"24205231929492949292000015925030\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA1OA==\"\
+      ,\"dataInclusao\":\"2023-03-20 02:32:41.883\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"200.00\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"DMG SEGURANCA E MEDICINA\
+      \ DO TRABALHO EIRELI ME\",\"detalhes\":{\"valorTotal\":\"200.0\",\"detalheDescricao\"\
+      :\"Pagamento\",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"0.0\",\"dataVencimento\":\"2023-03-20\",\"empresaEmissora\":\"BCO LETSBANK\
+      \ S.A.\",\"valorOriginal\":\"200.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"63091002010417828400890214400013192950000020000\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"20h18\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"63091002010417828400890214400013192950000020000\"\
+      ,\"nomeDestinatario\":\"DMG SEGURANCA E MEDICINA DO TRABALHO EIRELI ME\",\"\
+      tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\
+      \ 15985892883\",\"autenticacao\":\"24205231929092959295000002000030\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA1Nw==\",\"\
+      dataInclusao\":\"2023-03-19 18:54:46.217\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"124.69\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Loja Online\",\"detalhes\":{\"txId\":\"paclffxpctil3el1flr1lb0gwgj\"\
+      ,\"nomePagador\":\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"descricaoPix\"\
+      :\"Loja TudodeFerramentas Pedido 29233\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E004169682023031921531I0Bt49pc1A\",\"chavePixRecebedor\":\"d24173bc-05e9-40bd-8a3e-bdad79b4e80f\"\
+      ,\"nomeEmpresaRecebedor\":\"PAGAR.ME INSTITUICAO DE PAGAME\",\"nomeRecebedor\"\
+      :\"Loja Online\",\"cpfCnpjRecebedor\":\"37571048000160\",\"origemMovimentacao\"\
+      :\"QR_CODE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA1Ng==\"\
+      ,\"dataInclusao\":\"2023-03-19 18:42:41.947\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"C\",\"valor\":\"30000.00\",\"\
+      titulo\":\"Pix recebido\",\"descricao\":\"Helena Maria Usberti Decico Negri\
+      \ 15985892883\",\"detalhes\":{\"txId\":\"\",\"nomePagador\":\"Helena Maria Usberti\
+      \ Decico Negri 15985892883\",\"descricaoPix\":\"\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"STONE IP\",\"tipoDetalhe\":\"COMPLETE\",\"endToEndId\"\
+      :\"E165015552023031921429bcdf58819e\",\"chavePixRecebedor\":\"478ab86a-2d03-4d7c-84fb-3c3dbaf9b6d4\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTIwXzkwMDAwMDA1NQ==\"\
+      ,\"dataInclusao\":\"2023-03-19 10:41:33.980\",\"dataTransacao\":\"2023-03-20\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"2639.57\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Assai Atacadista\",\"detalhes\":{\"txId\"\
+      :\"SE00000008309A0HQRW92IVVAEALSUUF02\",\"nomePagador\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\",\"nomeEmpresaPagador\"\
+      :\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"endToEndId\":\"E00416968202303191341VWzlKBJjiuJ\"\
+      ,\"chavePixRecebedor\":\"pix-itau.pdv@assai.com.br\",\"nomeEmpresaRecebedor\"\
+      :\"ITAU UNIBANCO S.A.\",\"nomeRecebedor\":\"Assai Atacadista\",\"cpfCnpjRecebedor\"\
+      :\"06057223000171\",\"origemMovimentacao\":\"QR_CODE\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1NA==\",\"dataInclusao\"\
+      :\"2023-03-17 08:32:52.850\",\"dataTransacao\":\"2023-03-17\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1513.87\",\"titulo\":\"Pagamento\
+      \ CPFL SP\",\"descricao\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"detalhes\":{\"\
+      valorTotal\":\"1513.87\",\"detalheDescricao\":\"energia  fevereiro\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-17\",\"empresaEmissora\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"valorOriginal\"\
+      :\"1513.87\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"836700000158138700403262934455107037101127804389\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"08h32\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"836700000158138700403262934455107037101127804389\"\
+      ,\"nomeDestinatario\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929292929292000015138730\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1Mw==\"\
+      ,\"dataInclusao\":\"2023-03-17 08:32:52.800\",\"dataTransacao\":\"2023-03-17\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1813.48\"\
+      ,\"titulo\":\"Pagamento CPFL SP\",\"descricao\":\"CPFL CIA PAULISTA DE FORCA\
+      \ LUZ\",\"detalhes\":{\"valorTotal\":\"1813.48\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-17\",\"empresaEmissora\":\"CPFL CIA PAULISTA DE\
+      \ FORCA LUZ\",\"valorOriginal\":\"1813.48\",\"desconto\":\"0.0\",\"cpfCnpj\"\
+      :\"27723354000110\",\"valorAumentado\":\"0.0\",\"codBarras\":\"836000000189134800403161135251175034101127804389\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"08h32\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"836000000189134800403161135251175034101127804389\"\
+      ,\"nomeDestinatario\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929292929292000018134830\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1Mg==\"\
+      ,\"dataInclusao\":\"2023-03-17 08:32:52.787\",\"dataTransacao\":\"2023-03-17\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1169.99\"\
+      ,\"titulo\":\"Pagamento CPFL SP\",\"descricao\":\"CPFL CIA PAULISTA DE FORCA\
+      \ LUZ\",\"detalhes\":{\"valorTotal\":\"1169.99\",\"detalheDescricao\":\"janeiro\
+      \ for\xE7a \",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"0.0\",\"dataVencimento\":\"2023-03-17\",\"empresaEmissora\":\"CPFL CIA PAULISTA\
+      \ DE FORCA LUZ\",\"valorOriginal\":\"1169.99\",\"desconto\":\"0.0\",\"cpfCnpj\"\
+      :\"27723354000110\",\"valorAumentado\":\"0.0\",\"codBarras\":\"836100000113699900403162435130837030101127804389\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"08h32\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"836100000113699900403162435130837030101127804389\"\
+      ,\"nomeDestinatario\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929292929292000011699930\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1MQ==\"\
+      ,\"dataInclusao\":\"2023-03-17 08:32:52.600\",\"dataTransacao\":\"2023-03-17\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"521.31\"\
+      ,\"titulo\":\"Pagamento CPFL SP\",\"descricao\":\"CPFL CIA PAULISTA DE FORCA\
+      \ LUZ\",\"detalhes\":{\"valorTotal\":\"521.31\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-17\",\"empresaEmissora\":\"CPFL CIA PAULISTA DE\
+      \ FORCA LUZ\",\"valorOriginal\":\"521.31\",\"desconto\":\"0.0\",\"cpfCnpj\"\
+      :\"27723354000110\",\"valorAumentado\":\"0.0\",\"codBarras\":\"836400000052213100403228334690434033101215322476\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"08h32\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"836400000052213100403228334690434033101215322476\"\
+      ,\"nomeDestinatario\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929292929292000005213130\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE2XzkwMDAwMDA1MA==\"\
+      ,\"dataInclusao\":\"2023-03-16 14:06:52.717\",\"dataTransacao\":\"2023-03-16\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"261.05\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SEFAZ SP DARE\",\"\
+      detalhes\":{\"valorTotal\":\"261.05\",\"detalheDescricao\":\"Pagamento\",\"\
+      contaBancaria\":\"256534322\",\"agencia\":\"0001\",\"adicionado\":\"0.0\",\"\
+      dataVencimento\":\"2023-03-20\",\"valorOriginal\":\"261.05\",\"desconto\":\"\
+      0.0\",\"cpfCnpj\":\"27723354000110\",\"codBarras\":\"858300000025610501851122305900369671485202303203\"\
+      ,\"valorParcial\":\"261.05\",\"hora\":\"14h06\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"BANCO INTER S.A.\",\"nomeDestinatario\":\"SEFAZ\
+      \ SP DARE\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 1\",\"autenticacao\":\"24205231929192919295000002610530\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE1XzkwMDAwMDA0OQ==\",\"\
+      dataInclusao\":\"2023-03-15 20:38:03.170\",\"dataTransacao\":\"2023-03-15\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"143.00\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Nova Delivery\",\"detalhes\":{\"nomePagador\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E00416968202303152337MMwKyawXo4j\",\"chavePixRecebedor\":\"44566572000108\"\
+      ,\"nomeEmpresaRecebedor\":\"COOP SICREDI DEXIS\",\"nomeRecebedor\":\"Nova Delivery\"\
+      ,\"cpfCnpjRecebedor\":\"44566572000108\",\"origemMovimentacao\":\"CHAVE\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE1XzkwMDAwMDA0OA==\",\"\
+      dataInclusao\":\"2023-03-15 20:19:07.890\",\"dataTransacao\":\"2023-03-15\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"511.75\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"FRIMESA COOPERATIVA CENTRAL\"\
+      ,\"detalhes\":{\"valorTotal\":\"511.75\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-15\",\"empresaEmissora\":\"BCO SAFRA S.A.\",\"\
+      valorOriginal\":\"511.75\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"42297009030001233127800438609422192900000051175\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"20h18\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"42297009030001233127800438609422192900000051175\"\
+      ,\"nomeDestinatario\":\"FRIMESA COOPERATIVA CENTRAL\",\"tipoDetalhe\":\"COMPLETE\"\
+      ,\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NE\",\"autenticacao\":\"24205231929092909290000005117530\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE1XzkwMDAwMDA0Nw==\"\
+      ,\"dataInclusao\":\"2023-03-15 20:19:07.853\",\"dataTransacao\":\"2023-03-15\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"494.21\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"DORIVALI COM DIST PR ALIM\
+      \ LTDA\",\"detalhes\":{\"valorTotal\":\"494.21\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-15\",\"empresaEmissora\":\"ITAU UNIBANCO S.A.\"\
+      ,\"valorOriginal\":\"494.21\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"741.315\",\"codBarras\":\"34191090085220399647640400000002392900000049421\"\
+      ,\"valorParcial\":\"395.368\",\"hora\":\"20h18\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"34191090085220399647640400000002392900000049421\"\
+      ,\"nomeDestinatario\":\"DORIVALI COM DIST PR ALIM LTDA\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NE\",\"autenticacao\"\
+      :\"24205231929092909290000004942130\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE0XzkwMDAwMDA0Ng==\"\
+      ,\"dataInclusao\":\"2023-03-14 13:04:32.883\",\"dataTransacao\":\"2023-03-14\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"505.25\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Assai Atacadista\",\"detalhes\":{\"txId\"\
+      :\"SE00000008309JI4ONSDMZCKSK1T09IK4M\",\"nomePagador\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\",\"nomeEmpresaPagador\"\
+      :\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"endToEndId\":\"E00416968202303141603AVtv7sbn9l9\"\
+      ,\"chavePixRecebedor\":\"pix-itau.pdv@assai.com.br\",\"nomeEmpresaRecebedor\"\
+      :\"ITAU UNIBANCO S.A.\",\"nomeRecebedor\":\"Assai Atacadista\",\"cpfCnpjRecebedor\"\
+      :\"06057223000171\",\"origemMovimentacao\":\"QR_CODE\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE0XzkwMDAwMDA0NQ==\",\"dataInclusao\"\
+      :\"2023-03-14 07:42:07.277\",\"dataTransacao\":\"2023-03-14\",\"tipoTransacao\"\
+      :\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"300.00\",\"titulo\":\"Pix enviado\
+      \ \",\"descricao\":\"Wagner Beraldo Mei\",\"detalhes\":{\"nomePagador\":\"HELENA\
+      \ MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E00416968202303141041yF9mFkggrQK\",\"chavePixRecebedor\":\"25403337000170\"\
+      ,\"nomeEmpresaRecebedor\":\"NEON PAGAMENTOS S.A. IP\",\"nomeRecebedor\":\"Wagner\
+      \ Beraldo Mei\",\"cpfCnpjRecebedor\":\"25403337000170\",\"origemMovimentacao\"\
+      :\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDA0NA==\"\
+      ,\"dataInclusao\":\"2023-03-13 18:05:31.440\",\"dataTransacao\":\"2023-03-13\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"56.11\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"SIMPLES NACIONAL\"\
+      ,\"detalhes\":{\"valorTotal\":\"56.11\",\"detalheDescricao\":\"Pagamento\",\"\
+      contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-31\",\"empresaEmissora\":\"SIMPLES NACIONAL\"\
+      ,\"valorOriginal\":\"56.11\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"858400000000561103282304900718230725182650650060\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"18h04\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"858400000000561103282304900718230725182650650060\"\
+      ,\"nomeDestinatario\":\"SIMPLES NACIONAL\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\":\"24205231928892889306000000561130\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDA0Mw==\"\
+      ,\"dataInclusao\":\"2023-03-13 17:24:44.550\",\"dataTransacao\":\"2023-03-13\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"700.00\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"VANILLA BRASIL INDUSTRIA\
+      \ E COMERCIO DE PRODUTOS AL\",\"detalhes\":{\"valorTotal\":\"700.0\",\"detalheDescricao\"\
+      :\"Pagamento\",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"0.0\",\"dataVencimento\":\"2023-03-13\",\"empresaEmissora\":\"BANCO SICOOB\
+      \ S.A.\",\"valorOriginal\":\"700.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"75691329260102305960100350570016392880000070000\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"17h20\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"75691329260102305960100350570016392880000070000\"\
+      ,\"nomeDestinatario\":\"VANILLA BRASIL INDUSTRIA E COMERCIO DE PRODUTOS AL\"\
+      ,\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI\"\
+      ,\"autenticacao\":\"24205231928892889288000007000030\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDA0Mg==\",\"dataInclusao\"\
+      :\"2023-03-13 17:24:44.523\",\"dataTransacao\":\"2023-03-13\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"69.00\",\"titulo\":\"Pagamento\
+      \ efetuado\",\"descricao\":\"OMIEXPERIENCE LTDA.\",\"detalhes\":{\"valorTotal\"\
+      :\"69.0\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\":\"256534322\"\
+      ,\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\":\"2023-03-13\"\
+      ,\"empresaEmissora\":\"BCO SANTANDER 0BRASIL0 S.A.\",\"valorOriginal\":\"69.0\"\
+      ,\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\":\"0.0\"\
+      ,\"codBarras\":\"03399823169230000001212361001014492880000006900\",\"valorParcial\"\
+      :\"0.0\",\"hora\":\"17h21\",\"juros\":\"0.0\",\"multa\":\"0.0\",\"empresaOrigem\"\
+      :\"Banco Inter\",\"linhaDigitavel\":\"03399823169230000001212361001014492880000006900\"\
+      ,\"nomeDestinatario\":\"OMIEXPERIENCE LTDA.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 159858\",\"autenticacao\":\"\
+      24205231928892889288000000690030\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDA0MQ==\"\
+      ,\"dataInclusao\":\"2023-03-13 17:24:44.510\",\"dataTransacao\":\"2023-03-13\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1075.50\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"SCALON CERCHI LTDA\",\"detalhes\"\
+      :{\"valorTotal\":\"1075.5\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-13\",\"empresaEmissora\":\"ITAU UNIBANCO S.A.\",\"valorOriginal\"\
+      :\"1125.0\",\"desconto\":\"49.5\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"34191091073429116767370782840006192880000112500\",\"\
+      valorParcial\":\"0.0\",\"hora\":\"17h20\",\"juros\":\"0.0\",\"multa\":\"0.0\"\
+      ,\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"34191091073429116767370782840006192880000112500\"\
+      ,\"nomeDestinatario\":\"SCALON CERCHI LTDA\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      nomeOrigem\":\"HELENA MARIA USBERTI DECICO NE\",\"autenticacao\":\"24205231928892889288000010755030\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDA0MA==\"\
+      ,\"dataInclusao\":\"2023-03-13 17:24:44.490\",\"dataTransacao\":\"2023-03-13\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"348.65\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"DORIVALI COM DIST PR ALIM\
+      \ LTDA\",\"detalhes\":{\"valorTotal\":\"348.65\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-13\",\"empresaEmissora\":\"ITAU UNIBANCO S.A.\"\
+      ,\"valorOriginal\":\"348.65\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"522.975\",\"codBarras\":\"34191090085238631647640400000002592880000034865\"\
+      ,\"valorParcial\":\"278.92\",\"hora\":\"17h22\",\"juros\":\"0.0\",\"multa\"\
+      :\"0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"34191090085238631647640400000002592880000034865\"\
+      ,\"nomeDestinatario\":\"DORIVALI COM DIST PR ALIM LTDA\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NE\",\"autenticacao\"\
+      :\"24205231928892889288000003486530\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTEzXzkwMDAwMDAzOQ==\"\
+      ,\"dataInclusao\":\"2023-03-12 15:11:33.693\",\"dataTransacao\":\"2023-03-13\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"2017.90\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Assai Atacadista\",\"detalhes\":{\"txId\"\
+      :\"SE00000008309JAH0VZJD68IO4UBOGJV9J\",\"nomePagador\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\",\"nomeEmpresaPagador\"\
+      :\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"endToEndId\":\"E00416968202303121811uUoZ04kuyBT\"\
+      ,\"chavePixRecebedor\":\"pix-itau.pdv@assai.com.br\",\"nomeEmpresaRecebedor\"\
+      :\"ITAU UNIBANCO S.A.\",\"nomeRecebedor\":\"Assai Atacadista\",\"cpfCnpjRecebedor\"\
+      :\"06057223000171\",\"origemMovimentacao\":\"QR_CODE\"}},{\"idTransacao\":\"\
+      UFJPVklTT1JJT18wMDFfMDAwMTlfMjU2NTM0MzIyXzIwMjMtMDMtMDhfNzM1Mjk5ODMw\",\"dataInclusao\"\
+      :\"2023-03-08 23:54:02.583\",\"dataTransacao\":\"2023-03-08\",\"tipoTransacao\"\
+      :\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"239.00\",\"titulo\":\"Pix enviado\
+      \ \",\"descricao\":\"Nova Delivery\",\"detalhes\":{\"nomePagador\":\"HELENA\
+      \ MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E00416968202303090253yufwM9MgMdn\",\"chavePixRecebedor\":\"44566572000108\"\
+      ,\"nomeEmpresaRecebedor\":\"COOP SICREDI DEXIS\",\"nomeRecebedor\":\"Nova Delivery\"\
+      ,\"cpfCnpjRecebedor\":\"44566572000108\",\"origemMovimentacao\":\"CHAVE\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA4XzkwMDAwMDAzNw==\",\"\
+      dataInclusao\":\"2023-03-08 18:13:37.230\",\"dataTransacao\":\"2023-03-08\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"189.90\"\
+      ,\"titulo\":\"Pagamento efetuado\",\"descricao\":\"DCB MACHADO BLINDE SEGURANCA\
+      \ ELETRONICA\",\"detalhes\":{\"valorTotal\":\"189.9\",\"detalheDescricao\":\"\
+      alarme\",\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\"\
+      :\"0.0\",\"dataVencimento\":\"2023-03-10\",\"empresaEmissora\":\"BANCO DO BRASIL\
+      \ S.A.\",\"valorOriginal\":\"189.9\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"00190000090356059613674293983172192850000018990\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"18h12\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"00190000090356059613674293983172192850000018990\"\
+      ,\"nomeDestinatario\":\"DCB MACHADO BLINDE SEGURANCA ELETRONICA\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 159\",\"autenticacao\"\
+      :\"24205231928392839285000001899030\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA4XzkwMDAwMDAzNg==\"\
+      ,\"dataInclusao\":\"2023-03-08 18:09:05.167\",\"dataTransacao\":\"2023-03-08\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"465.00\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Chaveiro Santo Antonio Ltda Me\",\"detalhes\"\
+      :{\"nomePagador\":\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\"\
+      :\"27723354000110\",\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"endToEndId\":\"E00416968202303082107WQJoIOoUDeT\",\"chavePixRecebedor\"\
+      :\"63914972000101\",\"nomeEmpresaRecebedor\":\"ITAU UNIBANCO S.A.\",\"nomeRecebedor\"\
+      :\"Chaveiro Santo Antonio Ltda Me\",\"cpfCnpjRecebedor\":\"63914972000101\"\
+      ,\"origemMovimentacao\":\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA3XzkwMDAwMDAzNQ==\"\
+      ,\"dataInclusao\":\"2023-03-07 05:46:28.690\",\"dataTransacao\":\"2023-03-07\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"852.40\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"DARF NUMERADO\",\"\
+      detalhes\":{\"valorTotal\":\"852.4\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-20\",\"empresaEmissora\":\"DARF NUMERADO\",\"valorOriginal\":\"852.4\"\
+      ,\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\":\"0.0\"\
+      ,\"codBarras\":\"858300000084524003852309790716230623405807796294\",\"valorParcial\"\
+      :\"0.0\",\"hora\":\"21h18\",\"juros\":\"0.0\",\"multa\":\"0.0\",\"empresaOrigem\"\
+      :\"Banco Inter\",\"linhaDigitavel\":\"858300000084524003852309790716230623405807796294\"\
+      ,\"nomeDestinatario\":\"DARF NUMERADO\",\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\":\"24205231928192829295000008524030\"\
+      }},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA3XzkwMDAwMDAzNA==\"\
+      ,\"dataInclusao\":\"2023-03-07 05:46:28.527\",\"dataTransacao\":\"2023-03-07\"\
+      ,\"tipoTransacao\":\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"844.51\"\
+      ,\"titulo\":\"Pagamento de Conv\xEAnio\",\"descricao\":\"FGTS GRF CONVENIO 0179\"\
+      ,\"detalhes\":{\"valorTotal\":\"844.51\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-07\",\"empresaEmissora\":\"FGTS GRF CONVENIO 0179\"\
+      ,\"valorOriginal\":\"844.51\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"858800000083445101792307307674050823772335400010\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"21h18\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"858800000083445101792307307674050823772335400010\"\
+      ,\"nomeDestinatario\":\"FGTS GRF CONVENIO 0179\",\"tipoDetalhe\":\"COMPLETE\"\
+      ,\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\":\"\
+      24205231928192829282000008445130\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAzMw==\"\
+      ,\"dataInclusao\":\"2023-03-06 21:31:13.433\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"1430.00\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Carolina Decico Negri\",\"detalhes\":{\"nomePagador\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E004169682023030700301BpMBLbIZYC\",\"chavePixRecebedor\":\"31548471895\"\
+      ,\"nomeEmpresaRecebedor\":\"NU PAGAMENTOS - IP\",\"nomeRecebedor\":\"Carolina\
+      \ Decico Negri\",\"cpfCnpjRecebedor\":\"31548471895\",\"origemMovimentacao\"\
+      :\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAzMg==\"\
+      ,\"dataInclusao\":\"2023-03-06 21:25:36.250\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"2247.65\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Monise Bosqueti\",\"detalhes\":{\"nomePagador\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E00416968202303070019NhnWpAAt1FK\",\"chavePixRecebedor\":\"+5511944951616\"\
+      ,\"nomeEmpresaRecebedor\":\"BCO ITAUCARD S.A.\",\"nomeRecebedor\":\"Monise Bosqueti\"\
+      ,\"cpfCnpjRecebedor\":\"41866742809\",\"origemMovimentacao\":\"CHAVE\"}},{\"\
+      idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAzMQ==\",\"\
+      dataInclusao\":\"2023-03-06 21:25:35.837\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"2252.79\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Joao Guilherme Pacca Perticarrari\",\"detalhes\"\
+      :{\"nomePagador\":\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\"\
+      :\"27723354000110\",\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"endToEndId\":\"E00416968202303070024WXpX6NpwzZk\",\"chavePixRecebedor\"\
+      :\"38371828861\",\"nomeEmpresaRecebedor\":\"BCO C6 S.A.\",\"nomeRecebedor\"\
+      :\"Joao Guilherme Pacca Perticarrari\",\"cpfCnpjRecebedor\":\"38371828861\"\
+      ,\"origemMovimentacao\":\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAzMA==\"\
+      ,\"dataInclusao\":\"2023-03-06 21:25:35.480\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"1447.63\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Nicole Gabriele Simoes Augusto\",\"detalhes\"\
+      :{\"nomePagador\":\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\"\
+      :\"27723354000110\",\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"endToEndId\":\"E004169682023030700218jYN3xxoCWi\",\"chavePixRecebedor\"\
+      :\"35687453806\",\"nomeEmpresaRecebedor\":\"CAIXA ECONOMICA FEDERAL\",\"nomeRecebedor\"\
+      :\"Nicole Gabriele Simoes Augusto\",\"cpfCnpjRecebedor\":\"35687453806\",\"\
+      origemMovimentacao\":\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAyOQ==\"\
+      ,\"dataInclusao\":\"2023-03-06 21:25:35.100\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"1996.51\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Samantha Lucena Santos\",\"detalhes\":{\"\
+      nomePagador\":\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\"\
+      :\"27723354000110\",\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\"\
+      :\"COMPLETE\",\"endToEndId\":\"E004169682023030700223iwRVbAPYZG\",\"chavePixRecebedor\"\
+      :\"44480758852\",\"nomeEmpresaRecebedor\":\"BCO DO BRASIL S.A.\",\"nomeRecebedor\"\
+      :\"Samantha Lucena Santos\",\"cpfCnpjRecebedor\":\"44480758852\",\"origemMovimentacao\"\
+      :\"CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAyOA==\"\
+      ,\"dataInclusao\":\"2023-03-06 21:18:10.320\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"1703.32\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Derik Stevan Fernandi\",\"detalhes\":{\"nomePagador\"\
+      :\"HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E004169682023030700175PofE0xHpUZ\",\"chavePixRecebedor\":\"+5519974019900\"\
+      ,\"nomeEmpresaRecebedor\":\"NU PAGAMENTOS - IP\",\"nomeRecebedor\":\"Derik Stevan\
+      \ Fernandi\",\"cpfCnpjRecebedor\":\"53968355830\",\"origemMovimentacao\":\"\
+      CHAVE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAyNw==\"\
+      ,\"dataInclusao\":\"2023-03-05 16:35:05.430\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"593.73\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Consumer Solucoes Em Tecnologia Ltda\",\"\
+      detalhes\":{\"txId\":\"45A35349782F4288BF101268162C841A\",\"nomePagador\":\"\
+      HELENA MARIA USBERTI DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\"\
+      ,\"nomeEmpresaPagador\":\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"\
+      endToEndId\":\"E004169682023030519348VPPdk6PhRa\",\"chavePixRecebedor\":\"8ab74e02-c4cc-46f1-9f13-237e455f4b27\"\
+      ,\"nomeEmpresaRecebedor\":\"IUGU IP S.A.\",\"nomeRecebedor\":\"Consumer Solucoes\
+      \ Em Tecnologia Ltda\",\"cpfCnpjRecebedor\":\"12403490000156\",\"origemMovimentacao\"\
+      :\"QR_CODE\"}},{\"idTransacao\":\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTA2XzkwMDAwMDAyNg==\"\
+      ,\"dataInclusao\":\"2023-03-05 10:22:34.537\",\"dataTransacao\":\"2023-03-06\"\
+      ,\"tipoTransacao\":\"PIX\",\"tipoOperacao\":\"D\",\"valor\":\"1717.43\",\"titulo\"\
+      :\"Pix enviado \",\"descricao\":\"Assai Atacadista\",\"detalhes\":{\"txId\"\
+      :\"SE0000000830974F4LGNEA82WWIBPNQ2ZS\",\"nomePagador\":\"HELENA MARIA USBERTI\
+      \ DECICO NEGRI 15985892883\",\"cpfCnpjPagador\":\"27723354000110\",\"nomeEmpresaPagador\"\
+      :\"BANCO INTER S.A.\",\"tipoDetalhe\":\"COMPLETE\",\"endToEndId\":\"E00416968202303051321eTrsOK2DotV\"\
+      ,\"chavePixRecebedor\":\"pix-itau.pdv@assai.com.br\",\"nomeEmpresaRecebedor\"\
+      :\"ITAU UNIBANCO S.A.\",\"nomeRecebedor\":\"Assai Atacadista\",\"cpfCnpjRecebedor\"\
+      :\"06057223000171\",\"origemMovimentacao\":\"QR_CODE\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTAzXzkwMDAwMDAyNQ==\",\"dataInclusao\"\
+      :\"2023-03-03 20:30:06.327\",\"dataTransacao\":\"2023-03-03\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"2240.00\",\"titulo\":\"Pagamento\
+      \ efetuado\",\"descricao\":\"CAMARGO . GOMIERO INDUSTRIA E COMERCIO DE FORNOS\
+      \ L\",\"detalhes\":{\"valorTotal\":\"2240.0\",\"detalheDescricao\":\"Pagamento\"\
+      ,\"contaBancaria\":\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\"\
+      ,\"dataVencimento\":\"2023-03-03\",\"empresaEmissora\":\"BANCO DO BRASIL S.A.\"\
+      ,\"valorOriginal\":\"2240.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\"\
+      ,\"valorAumentado\":\"0.0\",\"codBarras\":\"00190000090304352500900009354176892780000224000\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"20h29\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"00190000090304352500900009354176892780000224000\"\
+      ,\"nomeDestinatario\":\"CAMARGO . GOMIERO INDUSTRIA E COMERCIO DE FORNOS L\"\
+      ,\"tipoDetalhe\":\"COMPLETE\",\"nomeOrigem\":\"Helena Maria Usberti Decico Negri\"\
+      ,\"autenticacao\":\"24205231927892789278000022400030\"}},{\"idTransacao\":\"\
+      MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTAzXzkwMDAwMDAyNA==\",\"dataInclusao\"\
+      :\"2023-03-03 19:31:56.357\",\"dataTransacao\":\"2023-03-03\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1750.00\",\"titulo\":\"Pagamento\
+      \ efetuado\",\"descricao\":\"SODEXO PASS BRASIL SERV.COM.SA\",\"detalhes\":{\"\
+      valorTotal\":\"1750.0\",\"detalheDescricao\":\"Pagamento\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-04-01\",\"empresaEmissora\":\"ITAU UNIBANCO S.A.\",\"valorOriginal\"\
+      :\"1750.0\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"34191092972480254293680145580009893070000175000\",\"\
+      valorParcial\":\"0.0\",\"hora\":\"20h52\",\"juros\":\"0.0\",\"multa\":\"0.0\"\
+      ,\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"34191092972480254293680145580009893070000175000\"\
+      ,\"nomeDestinatario\":\"SODEXO PASS BRASIL SERV.COM.SA\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NE\",\"autenticacao\"\
+      :\"24205231927792789307000017500030\"}}]}"
+    content_type: text/plain; charset=utf-8
+    method: GET
+    status: 200
+    url: https://cdpj.partners.bancointer.com.br/banking/v2/extrato/completo?dataInicio=2023-01-01&dataFim=2023-03-22

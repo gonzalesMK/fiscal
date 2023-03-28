@@ -34,7 +34,7 @@ def update_nfes(path="resources/nfes_90_dias_fevereiro.csv") -> None:
         .str.replace(",", ".", regex=False)
     )
 
-    with db.start():
+    with db:
         companies = db.get_companies()
         by_name = {company.name: company.cnpj for company in companies}
         by_cnpj = {company.cnpj: company.name for company in companies}

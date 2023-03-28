@@ -198,13 +198,13 @@ def match():
     print("MATCH NFES")
     save = "1"
     while save:
-        with db.start():
+        with db.__start__():
             save = iterate_matching(db, cls=BestMatch)
 
     print("MATCH MARKETPLACES")
     save = "1"
     while save:
-        with db.start():
+        with db.__start__():
             save = iterate_matching(db, cls=MarketPlace)
 
     print("MATCH MISSING")
@@ -212,7 +212,7 @@ def match():
     print("UNDO")
     save = "1"
     while save:
-        with db.start():
+        with db.__start__():
             save = iterate_matching(db, cls=Undo)
 
 

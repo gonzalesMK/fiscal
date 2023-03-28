@@ -1,0 +1,9 @@
+responses:
+- response:
+    auto_calculate_content_length: false
+    body: '{"access_token": "6cab577f-81d8-409f-8ba8-8e2b4e54ee73","token_type": "Bearer",
+      "expires_in": 3600, "scope": "extrato.read"}'
+    content_type: text/plain
+    method: POST
+    status: 200
+    url: https://cdpj.partners.bancointer.com.br/oauth/v2/token

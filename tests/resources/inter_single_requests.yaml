@@ -1,0 +1,23 @@
+responses:
+- response:
+    auto_calculate_content_length: false
+    body: "{\"totalPaginas\":1,\"totalElementos\":4,\"ultimaPagina\":true,\"primeiraPagina\"\
+      :true,\"tamanhoPagina\":50,\"numeroDeElementos\":4,\"transacoes\":[{\"idTransacao\"\
+      :\"MDAxXzAwMDE5XzI1NjUzNDMyMl8yMDIzLTAzLTE3XzkwMDAwMDA1NA==\",\"dataInclusao\"\
+      :\"2023-03-17 08:32:52.850\",\"dataTransacao\":\"2023-03-17\",\"tipoTransacao\"\
+      :\"PAGAMENTO\",\"tipoOperacao\":\"D\",\"valor\":\"1513.87\",\"titulo\":\"Pagamento\
+      \ CPFL SP\",\"descricao\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"detalhes\":{\"\
+      valorTotal\":\"1513.87\",\"detalheDescricao\":\"energia  fevereiro\",\"contaBancaria\"\
+      :\"256534322\",\"agencia\":\"0001-9\",\"adicionado\":\"0.0\",\"dataVencimento\"\
+      :\"2023-03-17\",\"empresaEmissora\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"valorOriginal\"\
+      :\"1513.87\",\"desconto\":\"0.0\",\"cpfCnpj\":\"27723354000110\",\"valorAumentado\"\
+      :\"0.0\",\"codBarras\":\"836700000158138700403262934455107037101127804389\"\
+      ,\"valorParcial\":\"0.0\",\"hora\":\"08h32\",\"juros\":\"0.0\",\"multa\":\"\
+      0.0\",\"empresaOrigem\":\"Banco Inter\",\"linhaDigitavel\":\"836700000158138700403262934455107037101127804389\"\
+      ,\"nomeDestinatario\":\"CPFL CIA PAULISTA DE FORCA LUZ\",\"tipoDetalhe\":\"\
+      COMPLETE\",\"nomeOrigem\":\"HELENA MARIA USBERTI DECICO NEGRI 1\",\"autenticacao\"\
+      :\"24205231929292929292000015138730\"}}]}"
+    content_type: text/plain; charset=utf-8
+    method: GET
+    status: 200
+    url: https://cdpj.partners.bancointer.com.br/banking/v2/extrato/completo?dataInicio=2023-03-17&dataFim=2023-03-18
