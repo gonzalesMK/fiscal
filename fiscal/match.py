@@ -192,19 +192,28 @@ ORDER by NFE.emissor, ABS(days_difference)
 """
 
 
+def manual_match():
+    codigo_acesso = input("NFE Código de acesso: ")
+    transaction_id = int(input("Transação Id: "))
+
+    db = Database.from_default()
+    with db:
+        BaseMatch(codigo_acesso=codigo_acesso, id=transaction_id).act(db)
+
+
 def match():
     db = Database.from_default()
 
     print("MATCH NFES")
     save = "1"
     while save:
-        with db.__start__():
+        with db:
             save = iterate_matching(db, cls=BestMatch)
 
     print("MATCH MARKETPLACES")
     save = "1"
     while save:
-        with db.__start__():
+        with db:
             save = iterate_matching(db, cls=MarketPlace)
 
     print("MATCH MISSING")
@@ -212,7 +221,7 @@ def match():
     print("UNDO")
     save = "1"
     while save:
-        with db.__start__():
+        with db:
             save = iterate_matching(db, cls=Undo)
 
 
@@ -248,4 +257,5 @@ def _print_rows(results: list[BaseMatch]):
 
 
 if __name__ == "__main__":
-    typer.run(match)
+    typer.run(manual_match)
+    # typer.run(match)

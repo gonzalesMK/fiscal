@@ -13,7 +13,9 @@ class Columns(str, Enum):
     VALOR_LIQUIDO = "Valor Total Produtos"
 
 
-def update_nfes(path="resources/nfes_90_dias_fevereiro.csv") -> None:
+def update_nfes(
+    path="resources/relatorio_avancado_nfe_28-03-2023_22-36-56.csv",
+) -> None:
     d_f = pd.read_csv(path)
     db = Database.from_default()
 

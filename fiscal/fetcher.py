@@ -63,9 +63,14 @@ NO_COUNTERPARTY = [
     TransactionType.JUROS,
     TransactionType.SAQUE,
     TransactionType.TARIFA_INTER,
+    TransactionType.INVESTIMENTO,
 ]
 
-IGNORE_TYPE = [TransactionType.PIX_REJEITADO, TransactionType.DEPOSITO]
+IGNORE_TYPE = [
+    TransactionType.PIX_REJEITADO,
+    TransactionType.DEPOSITO,
+    TransactionType.INVESTIMENTO,
+]
 TARIFAS = [
     TransactionType.BACEN,
     TransactionType.TARIFA,
@@ -205,6 +210,8 @@ def _remove_existent_transactions(
 def handle_inserts(transactions: list[tuple[Transactions, str]], db: Database) -> None:
     transactions = _remove_existent_transactions(db, transactions)
     companies = _get_companies_mapping(db)
+
+    transactions.sort(key=lambda row: row[0].date)
 
     for trans, cnpj in transactions:
         counterpart = trans.counterpart_name or ""

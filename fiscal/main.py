@@ -2,9 +2,11 @@ from datetime import datetime
 from enum import Enum
 from pathlib import Path
 import pandas as pd
+from tabulate import tabulate
 import typer
 
 from fiscal.db import (
+    DATE_FORMAT,
     Database,
     EntryType,
     Transactions,
@@ -91,6 +93,17 @@ def _get_info(description: str) -> tuple[str, str]:
 
 def _get_dataframe(xlsx_path: str) -> pd.DataFrame:
     d_f = pd.read_excel(xlsx_path, skiprows=2)
+    d_f.drop(
+        columns=[
+            "Data balancete",
+            "Agencia Origem",
+            "Lote",
+            "Numero Documento",
+            "Cod. Historico",
+            "observacao"
+        ],
+        inplace=True,
+    )
 
     d_f[Columns.TRANSACTION] = d_f[Columns.TRANSACTION].str.strip()
 
@@ -111,9 +124,11 @@ def _get_dataframe(xlsx_path: str) -> pd.DataFrame:
         d_f["Detalhamento Hist."].apply(_get_info).str
     )
 
-    for group, df_groupd in d_f.groupby("Columns.DATE"):
+    for group, df_groupd in d_f.groupby(Columns.DATE):
         d_f.loc[df_groupd.index, Columns.EXTERNAL_ID] = (
-            group + "-" + df_groupd.reset_index().index.astype(str)
+            group.strftime(DATE_FORMAT)
+            + "-"
+            + df_groupd.reset_index().index.astype(str)
         )
 
     return d_f
@@ -140,7 +155,7 @@ def _parse_row(row: pd.Series) -> tuple[Transactions, str]:
         transaction_type=str(row[Columns.TRANSACTION]),
         category=None,
         description=str(row["Detalhamento Hist."]),
-        value=str(row[Columns.VALOR]),
+        value=float(row[Columns.VALOR]),
         counterpart_name=str(row[Columns.NAME]),
         validated=False,
         external_id=str(row[Columns.EXTERNAL_ID]),
@@ -153,13 +168,12 @@ def update_bb(xlsx_path: str = "resources/bb_fevereiro.xlsx"):
     """Update banco do brasil"""
 
     d_f = _get_dataframe(xlsx_path=xlsx_path)
-    transactions, cnpjs = list(
-        map(lambda *x: list(x), *[_parse_row(row) for _, row in d_f.iterrows()])
-    )
+    print(tabulate(d_f, headers="keys", tablefmt="psql"))
+    transactions = [_parse_row(row) for _, row in d_f.iterrows()]
 
     db = Database.from_default()
     with db:
-        handle_inserts(transactions, cnpjs, db)
+        handle_inserts(transactions, db)
 
 
 if __name__ == "__main__":
