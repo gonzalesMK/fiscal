@@ -51,7 +51,7 @@ class Transactions(SQLModel, table=True):
     transaction_type: str
     category: str | None
     description: str
-    value: str
+    value: float
     counterpart_name: str | None
     validated: bool
     external_id: str
@@ -170,7 +170,7 @@ class Database:
     def get_companies(self) -> list[Companies]:
         return self._get_all(Companies)
 
-    def get_transactions(self, bank: str):
+    def get_transactions(self, bank: str) -> list[Transactions]:
         with self as session:
             statement = select(Transactions).where(Transactions.bank.ilike(bank))
             return session.exec(statement=statement).all()
