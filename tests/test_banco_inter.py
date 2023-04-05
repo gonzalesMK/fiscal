@@ -40,7 +40,7 @@ def TRANSACTION_CPFL_1():
         entry_type=EntryType.SAIDA,
         category=Category.INSUMOS,
         description="cpfl cia paulista de forca luz",
-        value="1513.87",
+        value=1513.87,
         counterpart_name="cpfl cia paulista de forca luz",
         validated=False,
         external_id="mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na==",
@@ -65,7 +65,7 @@ def INSERT_TRANSACTION():
         transaction_type="pagamento",
         category=str(Category.INSUMOS.value),
         description="cpfl cia paulista de forca luz",
-        value="521.31",
+        value=521.31,
         counterpart_name="cpfl cia paulista de forca luz",
         validated=False,
         external_id="external_id_example",
@@ -81,7 +81,7 @@ def INSERT_TRANSACTION_AMBEV():
         transaction_type="pagamento",
         category=str(Category.INSUMOS.value),
         description="ambev",
-        value="521.31",
+        value=521.31,
         counterpart_name="ambev",
         validated=False,
         external_id="external_id_example",
@@ -314,6 +314,42 @@ class TestBancoInter(TestCase):
 
     @freeze_time("2023-03-19")
     def test_fetcher_works_with_repetitive_transaction(self):
+        self.r_mock._add_from_file(file_path=RESOURCES / "inter_single_requests.yaml")
+
+        with self.db:
+            for model in SETUP() + CPFL():
+                self.db.add(model)
+
+            self.db.add(TRANSACTION_CPFL_1())
+
+        update_banco_inter(client_id="123", client_secret="abc")
+
+        with self.db:
+            all_companies = {comp.name: comp for comp in self.db.get_companies()}
+            all_namings = {comp.nickname: comp for comp in self.db.get_company_names()}
+            all_transactions = {
+                trans.external_id: trans
+                for trans in self.db.get_transactions(INTER_BANK)
+            }
+
+            # Already existing company
+            assert "cpfl cia paulista de forca luz" in all_companies
+            assert len(all_companies) == 1
+
+            assert "cpfl cia paulista de forca luz" in all_namings
+            assert len(all_namings) == 1
+
+            # Default category on transaction
+            assert len(all_transactions) == 1
+            self.assertDictEqual(
+                all_transactions[
+                    "mdaxxzawmde5xzi1njuzndmyml8ymdizltazlte3xzkwmdawmda1na=="
+                ].dict(),
+                TRANSACTION_CPFL_1().dict(),
+            )
+
+    @freeze_time("2023-03-19")
+    def test_fetcher_saves_even_with_error_on_another_transaction(self):
         self.r_mock._add_from_file(file_path=RESOURCES / "inter_single_requests.yaml")
 
         with self.db:
