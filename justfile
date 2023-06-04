@@ -12,5 +12,14 @@ rollback:
         --url  jdbc:sqlite:fiscal.db \
         --changelog-file "db/db.changelog-master.yaml"
 
+nfe:
+    python fiscal/nfes.py
+
 inter:
     python fiscal/banco_inter.py
+
+db:
+    sqlitebrowser fiscal.db
+
+bb:
+    python fiscal/main.py

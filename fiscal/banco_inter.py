@@ -1,19 +1,17 @@
 from datetime import date, datetime, timedelta
-import typer
 from enum import Enum
+
+import requests
+import typer
+from pydantic import BaseModel
+from responses import _recorder
 from typing_extensions import Self
 
-from pydantic import BaseModel
-import requests
-from responses import _recorder
-
-from fiscal.db import DATE_FORMAT, Database, EntryType, Transactions
 from fiscal import fetcher
-
+from fiscal.db import DATE_FORMAT, Database, EntryType, Transactions
 
 URL_OAUTH = "https://cdpj.partners.bancointer.com.br/oauth/v2/token"
 URL_EXTRATO = "https://cdpj.partners.bancointer.com.br/banking/v2/extrato/completo"
-# access_token = "db6dc09b-1b32-434f-a4da-22dbf4d66f5b"
 
 
 INTER_BANK = "inter"
@@ -309,8 +307,9 @@ def _get_transactions(
     client: InterBank, db: Database
 ) -> list[tuple[Transactions, str]]:
     last_date = db.get_latest_transaction(bank=INTER_BANK) or (
-        datetime.now() - timedelta(days=90)
+        datetime.now() - timedelta(days=89)
     )
+    last_date -= timedelta(days=1)
 
     yesterday = datetime.combine(date.today() + timedelta(days=-1), datetime.max.time())
 

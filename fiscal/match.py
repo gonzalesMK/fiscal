@@ -1,10 +1,12 @@
+import os
 from datetime import datetime
 from functools import partial
 from os import stat
 from typing import Any
-from typing_extensions import Self
-from pydantic import BaseModel
+
 import typer
+from pydantic import BaseModel
+from typing_extensions import Self
 
 from fiscal.db import Database, Validations
 
@@ -194,6 +196,9 @@ ORDER by NFE.emissor, ABS(days_difference)
 
 def manual_match():
     codigo_acesso = input("NFE Código de acesso: ")
+
+    if not codigo_acesso:
+        return
     transaction_id = int(input("Transação Id: "))
 
     db = Database.from_default()
@@ -230,6 +235,8 @@ def row_to_model(row: list[Any], cls: type[BaseMatch]):
 
 
 def iterate_matching(db: Database, cls: type[BaseMatch]) -> bool:
+    os.system("clear")
+
     results = list(map(partial(row_to_model, cls=cls), db.execute(cls.query()).all()))
 
     if not results:
@@ -238,7 +245,7 @@ def iterate_matching(db: Database, cls: type[BaseMatch]) -> bool:
 
     _print_rows(results)
 
-    save = input(f"Would you like to accept a match (0 to {len(results)}): ")
+    save = input(f"Would you like to accept a match (0 to {len(results) - 1}): ")
 
     if save:
         results[int(save)].act(db=db)
@@ -257,5 +264,5 @@ def _print_rows(results: list[BaseMatch]):
 
 
 if __name__ == "__main__":
-    typer.run(manual_match)
-    # typer.run(match)
+    # typer.run(manual_match)
+    typer.run(match)

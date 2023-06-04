@@ -1,12 +1,12 @@
-from datetime import datetime, date
-from enum import Enum
 import os
+from datetime import date, datetime
+from enum import Enum
 from typing import TypeVar
 
 from pandas.core.common import contextlib
 from sqlalchemy import event, text
 from sqlalchemy.engine import Engine
-from sqlmodel import Field, SQLModel, Session, create_engine, select
+from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 DB_PATH = "/home/julianonegri/Documents/github/fiscal/fiscal.db"
 
@@ -152,9 +152,10 @@ class Database:
             raise ValueError("Not within a session")
         self._session.delete(model)
 
-    def add(self, model: SQLModel) -> None:
+    def add(self, model: Model) -> Model:
         with self as session:
             session.add(model)
+            return model
 
     def _get_all(self, model: type[Model]) -> list[Model]:
         with self as session:
@@ -199,3 +200,8 @@ class Database:
         if self._session is None:
             raise ValueError("Not within a session")
         return self._session.execute(statement=text(statement))
+
+    def commit(self):
+        assert self._session
+        self._session.commit()
+        self._session.flush()

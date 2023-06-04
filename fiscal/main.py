@@ -1,16 +1,12 @@
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-import pandas as pd
-from tabulate import tabulate
-import typer
 
-from fiscal.db import (
-    DATE_FORMAT,
-    Database,
-    EntryType,
-    Transactions,
-)
+import pandas as pd
+import typer
+from tabulate import tabulate
+
+from fiscal.db import DATE_FORMAT, Database, EntryType, Transactions
 from fiscal.fetcher import handle_inserts
 
 root = Path(__file__).parent
@@ -100,7 +96,7 @@ def _get_dataframe(xlsx_path: str) -> pd.DataFrame:
             "Lote",
             "Numero Documento",
             "Cod. Historico",
-            "observacao"
+            "observacao",
         ],
         inplace=True,
     )
@@ -164,7 +160,7 @@ def _parse_row(row: pd.Series) -> tuple[Transactions, str]:
     return transaction, cnpj
 
 
-def update_bb(xlsx_path: str = "resources/bb_fevereiro.xlsx"):
+def update_bb(xlsx_path: str = "resources/bb_abril.xlsx"):
     """Update banco do brasil"""
 
     d_f = _get_dataframe(xlsx_path=xlsx_path)

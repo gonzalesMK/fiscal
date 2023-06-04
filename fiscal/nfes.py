@@ -1,7 +1,8 @@
 from datetime import datetime
 from enum import Enum
-import typer
+
 import pandas as pd
+import typer
 
 from fiscal.db import Companies, Company_Naming, Database, NFEs
 
@@ -14,7 +15,7 @@ class Columns(str, Enum):
 
 
 def update_nfes(
-    path="resources/relatorio_avancado_nfe_28-03-2023_22-36-56.csv",
+    path="resources/relatorio_avancado_nfe_maio.csv",
 ) -> None:
     d_f = pd.read_csv(path)
     db = Database.from_default()
@@ -37,32 +38,43 @@ def update_nfes(
     )
 
     with db:
-        companies = db.get_companies()
-        by_name = {company.name: company.cnpj for company in companies}
-        by_cnpj = {company.cnpj: company.name for company in companies}
+        company_by_name = {company.name: company for company in db.get_companies()}
+        company_by_cnpj = {
+            company.cnpj: company for company in company_by_name.values()
+        }
+        company_by_nickname = {
+            company.nickname: company_by_name[company.name]
+            for company in db.get_company_names()
+        }
         codigos = {nfe.codigo_acesso for nfe in db.get_nfes()}
 
         for _, row in d_f.iterrows():
             codigo_acesso = str(row["Chave de Acesso"])
             cnpj = str(row["CNPJ Emitente"])
-            name = str(row["Nome PJ Emitente"])
+            name = str(row["Nome PJ Emitente"]).lower()
             date: datetime = row[Columns.DATA]
 
             if codigo_acesso in codigos:
                 continue
 
-            if not cnpj in by_cnpj:
-                if name in by_name:
-                    match_cnpj = by_name[name]
-                    print(f"{name} has same cnpj as {cnpj} but like {match_cnpj}")
+            print(f"{name} - {cnpj}")
+            if name in company_by_nickname:
+                if cnpj not in company_by_cnpj:
+                    match_cnpj = company_by_nickname[name]
+                    print(f"{name} has same cnpj as {cnpj} but not like {match_cnpj}")
                     raise ValueError(
                         f"{name} has same cnpj as {cnpj} but like {match_cnpj}"
                     )
-                # category = input(f"Category for {name} and {cnpj}: ")
-                db.add(Companies(name=name, cnpj=cnpj, default_category=""))
+            elif cnpj in company_by_cnpj:
+                print("!!!!!")
+                db.add(Company_Naming(nickname=name, name=company_by_cnpj[cnpj].name))
+                company_by_nickname[name] = company_by_cnpj[cnpj]
+            else:
+                print("??????????")
+                company = db.add(Companies(name=name, cnpj=cnpj, default_category=""))
                 db.add(Company_Naming(nickname=name, name=name))
-                by_cnpj[cnpj] = name
-                by_name[name] = cnpj
+                company_by_cnpj[cnpj] = company
+                company_by_nickname[name] = company
 
             db.add(
                 NFEs(
@@ -73,6 +85,8 @@ def update_nfes(
                     emissor=name,
                 )
             )
+
+            db.commit()
 
 
 if __name__ == "__main__":
