@@ -223,6 +223,9 @@ def match():
 
     print("MATCH MISSING")
 
+
+def undo():
+    db = Database.from_default()
     print("UNDO")
     save = "1"
     while save:

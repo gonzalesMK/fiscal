@@ -5,13 +5,16 @@ import requests
 import typer
 from pydantic import BaseModel
 from responses import _recorder
+from sqlmodel import select
 from typing_extensions import Self
 
 from fiscal import fetcher
-from fiscal.db import DATE_FORMAT, Database, EntryType, Transactions
+from fiscal.db import DATE_FORMAT, Balance, Database, EntryType, Transactions
+from fiscal.reports import first_day_of_month, last_day_of_month
 
 URL_OAUTH = "https://cdpj.partners.bancointer.com.br/oauth/v2/token"
 URL_EXTRATO = "https://cdpj.partners.bancointer.com.br/banking/v2/extrato/completo"
+URL_SALDO = "https://cdpj.partners.bancointer.com.br/banking/v2/saldo"
 
 
 INTER_BANK = "inter"
@@ -114,15 +117,15 @@ class TransferenciaTransacao(BaseModel):
     descricaoTransferencia: str
     agenciaPagador: str
     bancoRecebedor: str
-    contaBancariaRecebedor: str
-    cpfCnpjRecebedor: str
+    contaBancariaRecebedor: str | None
+    cpfCnpjRecebedor: str | None
     cpfCnpjPagador: str
     nomePagador: str
-    nomeEmpresaPagador: str
-    nomeRecebedor: str
-    tipoDetalhe: str
+    nomeEmpresaPagador: str | None
+    nomeRecebedor: str | None
+    tipoDetalhe: str | None
     idTransferencia: str | None
-    agenciaRecebedor: str
+    agenciaRecebedor: str | None
     dataEfetivacao: str
 
     class Config:
@@ -133,10 +136,10 @@ class PixTransacao(BaseModel):
     nomePagador: str
     descricaoPix: str | None
     cpfCnpjPagador: str
-    nomeEmpresaPagador: str
-    tipoDetalhe: str
-    endToEndId: str
-    chavePixRecebedor: str
+    nomeEmpresaPagador: str = ""
+    tipoDetalhe: str | None
+    endToEndId: str | None
+    chavePixRecebedor: str | None
     nomeEmpresaRecebedor: str | None
     nomeRecebedor: str | None
     cpfCnpjRecebedor: str | None
@@ -172,6 +175,14 @@ class GetTransactions(BaseModel):
 
     class Config:
         anystr_lower = True
+
+
+class GetBalance(BaseModel):
+    bloqueadoCheque: float | None
+    disponivel: float
+    bloqueadoJudicialmente: float | None
+    bloqueadoAdministrativo: float | None
+    limite: float | None
 
 
 class InterBank:
@@ -251,6 +262,24 @@ class InterBank:
 
         return GetTransactions.parse_raw(resp.content)
 
+    def _get_balance(self, date: datetime) -> GetBalance:
+        resp = self._session.get(
+            URL_SALDO,
+            headers={
+                "Authorization": self.bearer_token,
+            },
+            params={
+                "dataSaldo": date.date().strftime(DATE_FORMAT),
+            },
+            cert=("certificado.crt", "chave.key"),
+        )
+
+        resp.raise_for_status()
+
+        print(resp.content)
+
+        return GetBalance.parse_raw(resp.content)
+
 
 @_recorder.record(file_path="out.yaml")
 def test_recorder():
@@ -289,7 +318,7 @@ def _convert_transaction(transaction: Transaction) -> tuple[Transactions, str]:
     return (
         Transactions(
             bank=INTER_BANK,
-            date=datetime.combine(transaction.dataTransacao, datetime.min.time()),
+            date=transaction.dataInclusao,
             entry_type=transaction.tipoOperacao.to_entry_type(),
             transaction_type=transaction.tipoTransacao,
             category=None,
@@ -300,6 +329,30 @@ def _convert_transaction(transaction: Transaction) -> tuple[Transactions, str]:
             external_id=transaction.idTransacao,
         ),
         cnpj,
+    )
+
+
+def _update_balance(client: InterBank, db: Database):
+    last_day = last_day_of_month()
+
+    statement = (
+        select(Balance)
+        .where(Balance.bank == INTER_BANK)
+        .where(Balance.date == last_day.date())
+    )
+    exist_balance = db.exec(statement).all()
+
+    if exist_balance:
+        return
+
+    balance = client._get_balance(last_day)
+
+    db.insert_balance(
+        Balance(
+            date=last_day,
+            bank=INTER_BANK,
+            balance=balance.disponivel,
+        )
     )
 
 
@@ -329,6 +382,7 @@ def update_banco_inter(
     client = InterBank.from_secrets(client_id=client_id, client_secret=client_secret)
 
     with db:
+        _update_balance(client, db)
         transactions = _get_transactions(db=db, client=client)
         fetcher.handle_inserts(transactions, db)
 

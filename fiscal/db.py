@@ -1,12 +1,13 @@
 import os
 from datetime import date, datetime
 from enum import Enum
-from typing import TypeVar
+from typing import Any, TypeVar
 
 from pandas.core.common import contextlib
 from sqlalchemy import event, text
 from sqlalchemy.engine import Engine
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel.sql.expression import SelectOfScalar
 
 DB_PATH = "/home/julianonegri/Documents/github/fiscal/fiscal.db"
 
@@ -32,6 +33,18 @@ class Category(str, Enum):
     SEGURANÇA = "segurança"
     SERVIÇOS_3 = "serviços 3º"
     SISTEMAS = "sistemas"
+
+
+class Balance(SQLModel, table=True):
+    """Balance"""
+
+    id: int = Field(default=None, primary_key=True)
+    date: date
+    balance: float
+    bank: str
+
+    class Config:
+        anystr_lower = True
 
 
 class Categories(SQLModel, table=True):
@@ -97,6 +110,7 @@ class NFEs(SQLModel, table=True):
     valor_liquido: str
     valor_total: str
     validated: bool = Field(default=False)
+    description: str = Field(default="")
 
     class Config:
         anystr_lower = True
@@ -201,7 +215,16 @@ class Database:
             raise ValueError("Not within a session")
         return self._session.execute(statement=text(statement))
 
+    def exec(self, statement: SelectOfScalar[Any]):
+        if self._session is None:
+            raise ValueError("Not within a session")
+        return self._session.exec(statement=statement)
+
     def commit(self):
         assert self._session
         self._session.commit()
         self._session.flush()
+
+    def insert_balance(self, balance: Balance):
+        self.add(balance)
+        self.commit()

@@ -1,8 +1,10 @@
 import uuid
 from enum import Enum
+
 from thefuzz import process
 
 from fiscal.db import (
+    Balance,
     Category,
     Companies,
     Company_Naming,
@@ -123,6 +125,9 @@ def _create_company(nickname: str, cnpj: str, db: Database) -> Companies:
 
 
 def _get_companies_mapping(db: Database) -> dict[str, Companies]:
+    """
+    Get all companies from database and create a mapping
+    """
     company_listing = db.get_companies()
     names = db.get_company_names()
     companies = {company.cnpj: company for company in company_listing}
@@ -132,6 +137,9 @@ def _get_companies_mapping(db: Database) -> dict[str, Companies]:
 
 
 def _has_counterpart(transaction: Transactions) -> bool:
+    """
+    hardcoded check if transaction has a counterpart
+    """
     # Handle inflow and no counterpaty transactions
     has_counterparty = transaction.transaction_type not in NO_COUNTERPARTY
     saida = transaction.entry_type == EntryType.SAIDA
@@ -144,6 +152,10 @@ def _get_company(
     cnpj: str | None,
     db: Database,
 ) -> Companies:
+    """
+    Get the company by a given nickename or cnpj
+    """
+
     # Simple case where name is on database
     if counterpart in companies:
         return companies[counterpart]
@@ -162,21 +174,26 @@ def _get_company(
 
 
 def _print_company_suggestion(companies: dict[str, Companies], nickname: str):
+    """
+    Get company suggestion by a given nickname
+    """
     values = list(key.lower() for key in companies.keys() if not key.isdigit())
 
     chosen = process.extractOne(nickname.lower(), values)
 
-    found_cnpj = ""
     if chosen:
         chosen = str(chosen[0])
         found_cnpj = companies[chosen].cnpj
 
-    print(f"Similar named {chosen} with cnpj {found_cnpj}")
+        print(f"Similar named {chosen} with cnpj {found_cnpj}")
 
 
 def _default_cat_for_transaction(
     transaction: Transactions, company: Companies | None
 ) -> str | None:
+    """
+    Hardcoded default categories per transaction
+    """
     if transaction.entry_type == EntryType.ENTRADA:
         return Category.ENTRADA
 
@@ -208,6 +225,9 @@ def _remove_existent_transactions(
 
 
 def handle_inserts(transactions: list[tuple[Transactions, str]], db: Database) -> None:
+    """
+    Handle the inserts of multiple transactions
+    """
     transactions = _remove_existent_transactions(db, transactions)
     companies = _get_companies_mapping(db)
 
@@ -222,7 +242,6 @@ def handle_inserts(transactions: list[tuple[Transactions, str]], db: Database) -
 
         if _has_counterpart(trans):
             company = _get_company(companies, counterpart, cnpj, db)
-
             companies[company.cnpj] = company
             companies[company.name] = company
             companies[counterpart] = company
@@ -236,6 +255,4 @@ def handle_inserts(transactions: list[tuple[Transactions, str]], db: Database) -
         trans.category = category
 
         db.add(trans)
-
-        db._session.commit()
-        db._session.flush()
+        db.commit()
