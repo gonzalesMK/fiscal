@@ -5,9 +5,10 @@ migrate:
         --url  "jdbc:sqlite:fiscal.db?foreign_keys=1" \
         --changelog-file "db/db.changelog-master.yaml"
 rollback:
-    liquibase rollback \
+    liquibase rollback-count \
         --url  jdbc:sqlite:fiscal.db \
-        --changelog-file "db/db.changelog-master.yaml"
+        --changelog-file "db/db.changelog-master.yaml" \
+        --count 1
 
 nfe:
     python fiscal/nfes.py
@@ -31,3 +32,5 @@ report REPORT="--help":
     python fiscal/main.py report {{REPORT}}
 
     
+backup:
+    cp fiscal.db backups/fiscal_$(date +"%Y_%m_%d_%H_%M_%S").db

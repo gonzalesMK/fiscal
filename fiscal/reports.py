@@ -2,6 +2,7 @@ from datetime import date, datetime
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
+from sqlalchemy import case, func
 from sqlmodel import select
 from tabulate import tabulate
 
@@ -62,14 +63,20 @@ def diff_balance():
         print(tabulate(df, headers="keys", tablefmt="psql"))
 
 
-def saidas_report():
+def dre():
     """
     Return the difference in balance for each bank from the end of one month to the end of the next one
     """
     db = Database.from_default()
 
-    print("Total here should match the total in balances")
+    print("Total here should match the total in balances\n")
 
+    print(
+        (
+            "\t1. If consolidado and balances are matching, this means there are differences\n"
+            + "\tthis means that  there are transferência/ignorar wrong labeld"
+        )
+    )
     with db:
         last_day = last_day_of_month(1)
         first_day = first_day_of_month(1)
@@ -77,8 +84,6 @@ def saidas_report():
         statement = (
             select(Transactions)
             .where(Transactions.category != "transferencia")
-            # .where(Transactions.category != "investimentos")
-            .where(Transactions.category != "ignorar")
             .where(Transactions.bank != "rede")
             .where(Transactions.date >= first_day)
             .where(Transactions.date <= last_day)
@@ -88,7 +93,6 @@ def saidas_report():
 
         # Convert list of balances to pandas dataframe
         df = pd.DataFrame([balance.dict() for balance in transactions])
-        df = df[["date", "value", "category"]]
 
         # fill NA on category empty
         df["category"] = df["category"].fillna("n/a")
@@ -96,16 +100,18 @@ def saidas_report():
         # Conver value column to float
         df["value"] = df["value"].astype(float)
 
+        # Make negative where transactions are not entrada or transferencia
+        mask_saidas = df["entry_type"] == "saida"
+        df.loc[mask_saidas, "value"] = df.loc[mask_saidas, "value"] * -1
+
+        df = df[["date", "value", "category"]]
+
         # Group by category
         df = (
             df.groupby(["category"])
             .sum(numeric_only=True)
             .sort_values(by=["value"], ascending=False)
         )
-
-        # Make negative where transactions are not entrada or transferencia
-        mask_saidas = ~df.index.isin(["entrada", "transferencia", "estorno"])
-        df.loc[mask_saidas, "value"] = df.loc[mask_saidas, "value"] * -1
 
         df.sort_values(by=["value"], ascending=False, inplace=True)
 
@@ -118,16 +124,21 @@ def saidas_report():
 
         # Remove "compras" from the dataframe
         df = df.drop("compras")
-        df = df.drop("investimentos")
+        df = df.drop("investimentos", errors="ignore")
+        df = df.drop("resgate", errors="ignore")
+        df = df.drop("estorno", errors="ignore")
         df = df.drop("Total")
 
         df.loc["Total"] = df.sum()
         print(tabulate(df, headers="keys", tablefmt="psql"))
 
 
-def entradas_e_saidas_por_banco():
-    """ """
-    print("Consolidado Report")
+def transfers():
+    """
+    Validate all transfers between banks
+    """
+    print("Transfer Report\n")
+    print("\t1. Totals should match\n\n")
 
     db = Database.from_default()
 
@@ -136,25 +147,63 @@ def entradas_e_saidas_por_banco():
         first_day = first_day_of_month(1)
 
         statement = (
-            select(Transactions)
+            select(
+                func.sum(Transactions.value),  # noqa
+                Transactions.bank,
+                Transactions.entry_type,
+            )
+            .where(Transactions.category == "transferencia")
             .where(Transactions.date >= first_day)
             .where(Transactions.date <= last_day)
+            .group_by(Transactions.bank, Transactions.entry_type)
+            .order_by(Transactions.value)
         )
 
         transactions = db.exec(statement).all()
 
         # Convert list of balances to pandas dataframe
-        df = pd.DataFrame([balance.dict() for balance in transactions])
-        df = df[["date", "value", "entry_type", "bank"]]
-
-        # Conver value column to float
-        df["value"] = df["value"].astype(float)
-
         df_saidas = (
-            df.groupby(["bank", "entry_type"])
-            .sum(numeric_only=True)
-            .sort_values(by=["value"], ascending=False)
-            .reset_index()
+            pd.DataFrame(transactions, columns=["value", "bank", "entry_type"])
+            .pivot(index="bank", columns="entry_type", values="value")
+            .fillna(0)
+        )
+
+        # Create a column total with the diff from entrada and saida
+        df_saidas.loc["total"] = df_saidas.sum()
+
+        # pandas display dataframe pretty
+        print(df_saidas.to_markdown(floatfmt=",.2f"))
+
+
+def entradas_e_saidas_por_banco():
+    """
+    Sum all transactions for each bank
+    """
+    print("Consolidado Report - all transactions")
+
+    db = Database.from_default()
+
+    with db:
+        last_day = last_day_of_month(1)
+        first_day = first_day_of_month(1)
+
+        statement = (
+            select(
+                func.sum(Transactions.value),  # noqa
+                Transactions.bank,
+                Transactions.entry_type,
+            )
+            .where(Transactions.date >= first_day)
+            .where(Transactions.date <= last_day)
+            .group_by(Transactions.bank, Transactions.entry_type)
+            .order_by(Transactions.value)
+        )
+
+        transactions = db.exec(statement).all()
+
+        # Convert list of balances to pandas dataframe
+        df_saidas = (
+            pd.DataFrame(transactions, columns=["value", "bank", "entry_type"])
             .pivot(index="bank", columns="entry_type", values="value")
             .fillna(0)
         )
@@ -162,13 +211,8 @@ def entradas_e_saidas_por_banco():
         # Create a column total with the diff from entrada and saida
         df_saidas["total"] = df_saidas["entrada"] - df_saidas["saida"]
 
-        # Format value to currency string
-        df_saidas["entrada"] = df_saidas["entrada"].map(lambda x: f"R$ {x:,.2f}")
-        df_saidas["saida"] = df_saidas["saida"].map(lambda x: f"R$ {x:,.2f}")
-        df_saidas["total"] = df_saidas["total"].map(lambda x: f"R$ {x:,.2f}")
-
         # pandas display dataframe pretty
-        print(df_saidas.to_markdown())
+        print(df_saidas.to_markdown(floatfmt=",.2f"))
 
 
 # Validar se o que a REDE diz que me transferiu bate com o que eu recebi no itau
@@ -198,7 +242,6 @@ def compare_itau_and_rede():
 
         statement = (
             select(Transactions)
-            .where(Transactions.category != "ignorar")
             .where(Transactions.date >= first_day)
             .where(Transactions.date <= last_day)
         )
@@ -273,46 +316,127 @@ def entradas():
         first_day = first_day_of_month(1)
 
         statement = (
-            select(Transactions)
-            .where(Transactions.category != "ignorar")
+            select(
+                func.sum(Transactions.value),
+                Transactions.bank,
+                Transactions.category,
+            )
             .where(Transactions.category != "transferencia")
             .where(Transactions.entry_type == "entrada")
             .where(Transactions.bank != "rede")
             .where(Transactions.date >= first_day)
             .where(Transactions.date <= last_day)
+            .group_by(
+                Transactions.bank,
+                Transactions.category,
+            )
+            .order_by(Transactions.value)
         )
         transactions = db.exec(statement).all()
 
         # Convert list of balances to pandas dataframe
-        df = pd.DataFrame([balance.dict() for balance in transactions])
-        df = df[["date", "value", "transaction_type", "entry_type", "bank", "category"]]
-
-        df["transaction_type"] = df["transaction_type"].replace("pix - recebido", "pix")
-        df["transaction_type"] = df["transaction_type"].replace("pix - enviado", "pix")
+        df = pd.DataFrame(transactions, columns=["value", "bank", "category"])
 
         # Conver value column to float
         df["value"] = df["value"].astype(float)
 
-        df = (
-            df.groupby(["bank", "transaction_type", "category"])
-            .sum(numeric_only=True)
-            .sort_values(by=["value"], ascending=False)
-            .reset_index()
-            .pivot(
-                index=["transaction_type", "category"],
-                columns="bank",
-                values="value",
-            )
-            .reset_index()
-            .sort_values(by=["transaction_type"])
-            .fillna(0)
-        )
+        df = df.pivot(
+            index=["category"],
+            columns="bank",
+            values="value",
+        ).fillna(0)
 
         transactions = df
         transactions.loc["Total"] = transactions.sum()
-        transactions.loc["Total", "entry_type"] = None
-        transactions.loc["Total", "transaction_type"] = None
-        transactions.loc["Total", "category"] = None
         print(transactions.to_markdown())
 
+        print(f"\n\nTotal : {transactions.loc['Total'].sum()}")
+
+
+def saidas():
+    """
+    See all money that we paid out
+    """
+    db = Database.from_default()
+
+    print()
+
+    with db:
+        last_day = last_day_of_month(1)
+        first_day = first_day_of_month(1)
+
+        statement = (
+            select(
+                func.sum(Transactions.value),
+                Transactions.bank,
+                Transactions.category,
+            )
+            .where(Transactions.category != "transferencia")
+            .where(Transactions.entry_type == "saida")
+            .where(Transactions.bank != "rede")
+            .where(Transactions.date >= first_day)
+            .where(Transactions.date <= last_day)
+            .group_by(
+                Transactions.bank,
+                Transactions.category,
+            )
+            .order_by(Transactions.value)
+        )
+        transactions = db.exec(statement).all()
+
+        # Convert list of balances to pandas dataframe
+        df = pd.DataFrame(transactions, columns=["value", "bank", "category"])
+
+        # Conver value column to float
+        df["value"] = df["value"].astype(float)
+
+        df = df.pivot(
+            index=["category"],
+            columns="bank",
+            values="value",
+        ).fillna(0)
+
+        transactions = df
+        transactions.loc["Total"] = transactions.sum()
+        print(transactions.to_markdown(floatfmt=",.2f"))
+
         print(f"Total : {transactions.loc['Total'].sum()}")
+
+
+def fornecedores():
+    """
+    See all money categorized by fornecedor
+    """
+    db = Database.from_default()
+
+    print()
+
+    with db:
+        last_day = last_day_of_month(1)
+        first_day = first_day_of_month(1)
+
+        statement = (
+            select(
+                func.sum(Transactions.value),
+                Transactions.counterpart_name,
+            )
+            .where(Transactions.category != "transferencia")
+            .where(Transactions.entry_type == "saida")
+            .where(Transactions.bank != "rede")
+            .where(Transactions.date >= first_day)
+            .where(Transactions.date <= last_day)
+            .group_by(
+                Transactions.counterpart_name,
+            )
+            .order_by(Transactions.value)
+        )
+        transactions = db.exec(statement).all()
+
+        # Convert list of balances to pandas dataframe
+        df = pd.DataFrame(transactions, columns=["value", "fornecedor"])
+
+        # Conver value column to float
+        df["value"] = df["value"].astype(float)
+
+        df.sort_values(by="value", inplace=True)
+        print(df.to_markdown(floatfmt=",.2f"))

@@ -6,7 +6,7 @@ from typing import Any, TypeVar
 from pandas.core.common import contextlib
 from sqlalchemy import event, text
 from sqlalchemy.engine import Engine
-from sqlmodel import Field, Session, SQLModel, create_engine, select
+from sqlmodel import Field, Relationship, Session, SQLModel, create_engine, select
 from sqlmodel.sql.expression import SelectOfScalar
 
 DB_PATH = "/home/julianonegri/Documents/github/fiscal/fiscal.db"
@@ -112,8 +112,23 @@ class NFEs(SQLModel, table=True):
     validated: bool = Field(default=False)
     description: str = Field(default="")
 
+    produtos: list["Products"] = Relationship(back_populates="nfe")
+
     class Config:
         anystr_lower = True
+
+
+class Products(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    codigo_acesso: str = Field(default=None, foreign_key=NFEs.codigo_acesso)
+    name: str
+    unit_value: str
+    total_value: str
+    quantity: str
+    unity: str
+    dt_emissao: datetime
+
+    nfe: NFEs | None = Relationship(back_populates="produtos")
 
 
 class Validations(SQLModel, table=True):

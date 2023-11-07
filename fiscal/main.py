@@ -11,9 +11,12 @@ from fiscal.rede import update_rede
 from fiscal.reports import (
     compare_itau_and_rede,
     diff_balance,
+    dre,
     entradas,
     entradas_e_saidas_por_banco,
-    saidas_report,
+    fornecedores,
+    saidas,
+    transfers,
 )
 
 
@@ -28,10 +31,13 @@ def create_app() -> Any:
 
     report_app = typer.Typer()
     report_app.command("balances")(diff_balance)
-    report_app.command("transactions")(saidas_report)
+    report_app.command("dre")(dre)
     report_app.command("consolidado")(entradas_e_saidas_por_banco)
     report_app.command("vendas")(compare_itau_and_rede)
     report_app.command("entradas")(entradas)
+    report_app.command("saidas")(saidas)
+    report_app.command("transferencias")(transfers)
+    report_app.command("fornecedor")(fornecedores)
     app.add_typer(report_app, name="report")
 
     transaction_app = typer.Typer()
