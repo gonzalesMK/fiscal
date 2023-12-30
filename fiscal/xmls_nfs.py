@@ -5,7 +5,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from tabulate import tabulate
 
-from fiscal.db import Companies, Company_Naming, Database, NFEs, Products
+from fiscal.db import Companies, Company_Naming, Database, NFEs, Products_Pricing
 
 NF_VALUE = re.compile(r"<vNF>(.*)</vNF>")
 NF_TOTAL = re.compile(r"<total>.*<vProd>(.*)</vProd>.*\<\/total>")
@@ -82,19 +82,21 @@ def _get_nfes(path: str) -> list[XML_NFEs]:
                     continue
                 if "cce" in file:
                     continue
-
-                xmls.append(
-                    XML_NFEs(
-                        codigo_acesso=_get_group(NF_CODE.search(content)),
-                        dt_emissao=_get_group(NF_DATE.search(content)),
-                        valor_total=_get_group(NF_TOTAL.search(content)),
-                        valor_liquido=_get_group(NF_VALUE.search(content)),
-                        emissor=_get_group(NF_NAME.search(content)),
-                        cnpj_emissor=_get_group(NF_CNPJ.search(content)),
-                        description=",".join(re.findall(NF_PROD, content)),
-                        produtos=_get_produtos(content),
+                try:
+                    xmls.append(
+                        XML_NFEs(
+                            codigo_acesso=_get_group(NF_CODE.search(content)),
+                            dt_emissao=_get_group(NF_DATE.search(content)),
+                            valor_total=_get_group(NF_TOTAL.search(content)),
+                            valor_liquido=_get_group(NF_VALUE.search(content)),
+                            emissor=_get_group(NF_NAME.search(content)),
+                            cnpj_emissor=_get_group(NF_CNPJ.search(content)),
+                            description=",".join(re.findall(NF_PROD, content)),
+                            produtos=_get_produtos(content),
+                        )
                     )
-                )
+                except ValueError as err:
+                    print(f"Skipping {file}")
 
     print(
         tabulate(
@@ -113,9 +115,10 @@ def _get_nfes(path: str) -> list[XML_NFEs]:
     return xmls
 
 
-def update_nfes(path: str = "resources/nfs_abril.zip") -> None:
+def update_nfes(path: str) -> None:
     """Atualiza as notas fiscais no banco de dados"""
 
+    print("Loading NFEs from Zip file")
     nfes = _get_nfes(path)
 
     # Read XML from zipfile
@@ -150,6 +153,7 @@ def update_nfes(path: str = "resources/nfs_abril.zip") -> None:
                     raise ValueError(
                         f"{name} has same cnpj as {cnpj} but like {match_cnpj}"
                     )
+                    # TODO:  if the match_cnpj is an UUID, change it on the table Companies
             elif cnpj in company_by_cnpj:
                 ## Add company naming for existing cnpj
                 db.add(Company_Naming(nickname=name, name=company_by_cnpj[cnpj].name))
@@ -169,7 +173,7 @@ def update_nfes(path: str = "resources/nfs_abril.zip") -> None:
                     valor_liquido=row.valor_total,
                     emissor=name,
                     produtos=[
-                        Products(
+                        Products_Pricing(
                             codigo_acesso=codigo_acesso,
                             name=p.nome,
                             unit_value=p.valor_unitario,
@@ -186,4 +190,6 @@ def update_nfes(path: str = "resources/nfs_abril.zip") -> None:
             db.commit()
 
 
-update_nfes()
+if __name__ == "__main__":
+
+    update_nfes()

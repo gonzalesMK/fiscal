@@ -1,6 +1,6 @@
 select sum(value) as Total,  category as Categoria from transactions as a
 where 
-	a.date >= "2023-04-01" and a.date <= "2023-04-31"
+	a.date >= "2023-11-01" and a.date <= "2023-11-31"
 	and a.entry_type == "saida"
 	and Categoria != "ignorar"
 GROUP BY Categoria

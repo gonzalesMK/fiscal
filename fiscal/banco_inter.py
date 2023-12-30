@@ -4,6 +4,7 @@ from enum import Enum
 import requests
 import typer
 from pydantic import BaseModel
+from pydantic import parse_obj_as
 from responses import _recorder
 from sqlmodel import select
 from typing_extensions import Self
@@ -15,7 +16,7 @@ from fiscal.reports import first_day_of_month, last_day_of_month
 URL_OAUTH = "https://cdpj.partners.bancointer.com.br/oauth/v2/token"
 URL_EXTRATO = "https://cdpj.partners.bancointer.com.br/banking/v2/extrato/completo"
 URL_SALDO = "https://cdpj.partners.bancointer.com.br/banking/v2/saldo"
-
+URL_PAGAMENTOS = "https://cdpj.partners.bancointer.com.br/banking/v2/pagamento"
 
 INTER_BANK = "inter"
 
@@ -184,6 +185,22 @@ class GetBalance(BaseModel):
     bloqueadoAdministrativo: float | None
     limite: float | None
 
+class GetPaymentTransaction(BaseModel):
+    codigoTransacao: str
+    codigoBarra: float
+    tipo: str
+    dataVencimentoDigitada: str
+    dataVencimentoTitulo: str
+    dataInclusao: str
+    dataPagamento: str
+    valorPago: float
+    valorNominal: float
+    statusPagamento: str
+    aprovacoesNecessarias: int
+    aprovacoesRealizadas: int
+    cpfCnpjBeneficiario: str
+    nomeBeneficiario: str
+
 
 class InterBank:
     bearer_token: str | None
@@ -201,7 +218,7 @@ class InterBank:
         headers = {
             "client_id": client_id,
             "client_secret": client_secret,
-            "scope": "extrato.read",
+            "scope": "extrato.read pagamento-boleto.read",
             "grant_type": "client_credentials",
         }
 
@@ -214,18 +231,33 @@ class InterBank:
         resp.raise_for_status()
 
         self.bearer_token = f"Bearer {resp.json()['access_token']}"
+        print(f"Inter autenticado {self.bearer_token}")
 
     def get_transactions(
         self, start_date: datetime, end_date: datetime
     ) -> GetTransactions:
+
+        extratos = self.get_extratos(start_date, end_date)
+        
+        return extratos
+
+    def get_extratos(
+        self, start_date: datetime, end_date: datetime
+    ) -> GetTransactions:
+
+        """
+        Paginate requests to get.
+
+        There is a need to get information from two endpoints: 'extrato' and 'Pagamento'
+        """
         pagina = 0
-        transactions = self._get_transactions(
+        transactions = self._get_extrato(
             start_date=start_date, end_date=end_date, pagina=pagina
         )
 
         while not transactions.ultimaPagina:
             pagina += 1
-            more_transactions = self._get_transactions(
+            more_transactions = self._get_extrato(
                 start_date=start_date, end_date=end_date, pagina=pagina
             )
             transactions.transacoes += more_transactions.transacoes
@@ -233,24 +265,46 @@ class InterBank:
 
         return transactions
 
-    def _get_transactions(
+
+    def get_pagamentos(
+        self, start_date: datetime, end_date: datetime
+    ) -> list[GetPaymentTransaction]:
+
+        """
+        Paginate requests to get.
+
+        There is a need to get information from two endpoints: 'extrato' and 'Pagamento'
+        """
+        pagina = 0
+        content = self._get_endpoint(URL_EXTRATO, start_date, end_date, pagina)
+        return parse_obj_as(list[GetPaymentTransaction], content)
+
+    def _get_extrato(
         self, start_date: datetime, end_date: datetime, pagina: int | None = None
     ) -> GetTransactions:
         """
         Should paginate requests here
         """
+        content = self._get_endpoint(URL_EXTRATO, start_date, end_date, pagina)
+        return GetTransactions.parse_raw(content)
+
+
+    def _get_endpoint(
+        self, endpoint: str, start_date: datetime, end_date: datetime, pagina: int | None = None, **kwargs 
+        )-> bytes:
         if not self.bearer_token:
             raise ValueError("Not Authenticated")
 
         params = {
             "dataInicio": start_date.date().strftime(DATE_FORMAT),
             "dataFim": end_date.date().strftime(DATE_FORMAT),
-        }
+        } | kwargs
+
         if pagina:
             params["pagina"] = str(pagina)
 
         resp = self._session.get(
-            URL_EXTRATO,
+            endpoint,
             headers={
                 "Authorization": self.bearer_token,
             },
@@ -258,9 +312,15 @@ class InterBank:
             cert=("certificado.crt", "chave.key"),
         )
 
-        resp.raise_for_status()
+        try:
+            resp.raise_for_status()
+        except requests.HTTPError as err:
+            print(resp.content)
+            raise err
+        
+        print(resp.content)
 
-        return GetTransactions.parse_raw(resp.content)
+        return resp.content
 
     def _get_balance(self, date: datetime) -> GetBalance:
         resp = self._session.get(
@@ -324,7 +384,7 @@ def _convert_transaction(transaction: Transaction) -> tuple[Transactions, str]:
             category=None,
             description=transaction.descricao,
             value=transaction.valor,
-            counterpart_name=transaction.descricao,
+            counterpart_name= transaction.detalhes.nomeRecebedor if isinstance(transaction .detalhes, PixTransacao) else transaction.descricao,
             validated=False,
             external_id=transaction.idTransacao,
         ),

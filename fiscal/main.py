@@ -6,7 +6,7 @@ from fiscal.banco_inter import update_banco_inter
 from fiscal.bb import update_bb
 from fiscal.itau import update_itau
 from fiscal.match import manual_match, match, undo
-from fiscal.nfes import update_nfes
+from fiscal.xmls_nfs import update_nfes
 from fiscal.rede import update_rede
 from fiscal.reports import (
     compare_itau_and_rede,
@@ -23,7 +23,8 @@ from fiscal.reports import (
 def create_app() -> Any:
     app = typer.Typer()
     app.command("bb")(update_bb)
-    app.command("nfe")(update_nfes)
+    #app.command("nfe")(update_nfes)
+    app.command("xmls")(update_nfes)
     app.command("rede")(update_rede)
     app.command("itau")(update_itau)
     app.command("inter")(update_banco_inter)

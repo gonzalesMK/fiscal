@@ -10,8 +10,8 @@ rollback:
         --changelog-file "db/db.changelog-master.yaml" \
         --count 1
 
-nfe:
-    python fiscal/nfes.py
+xmls FILE:
+    python fiscal/main.py xmls {{FILE}}
 
 inter:
     python fiscal/main.py inter

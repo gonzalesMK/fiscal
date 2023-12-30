@@ -163,3 +163,9 @@ cython_debug/
 *.key
 *.crt
 *.zip
+
+# resources
+resources/
+backups/
+xmls/
+fiscal.db
